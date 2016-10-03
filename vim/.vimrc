@@ -9,6 +9,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'mbbill/undotree'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'ryanoasis/vim-devicons'
 Plug 'edkolev/tmuxline.vim'
 Plug 'majutsushi/tagbar'
 Plug 'jlanzarotta/bufexplorer'
@@ -28,6 +30,8 @@ set t_Co=256
 syntax on
 filetype plugin on
 
+set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
+
 " Undo tree
 if has("persistent_undo")
   set undodir=~/.undodir/
@@ -37,12 +41,12 @@ endif
 
 let syntastic_stl_format = '[Syntax: %E{line:%fe }%W{#W:%w}%B{ }%E{#E:%e}]'
 
-"nerdtree settings
+" Nerdtree settings
 let g:NERDTreeMouseMode = 2
-let g:NERDTreeWinSize = 40
-let g:NERDTreeMinimalUI=1
+let g:NERDTreeWinSize = 30
+let g:NERDTreeMinimalUI = 1
 
-"explorer mappings
+" Explorer mappings
 nnoremap <f1> :BufExplorer<cr>
 nnoremap <f2> :NERDTreeToggle<cr>
 nnoremap <f3> :TagbarToggle<cr>
@@ -60,8 +64,8 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " Arrows wont show on many platform
-let g:NERDTreeDirArrowExpandable = '+'
-let g:NERDTreeDirArrowCollapsible = '-'
+"let g:NERDTreeDirArrowExpandable = '+'
+"let g:NERDTreeDirArrowCollapsible = '-'
 
 " Easyalign bindings
 xmap ga <Plug>(EasyAlign)
@@ -100,6 +104,9 @@ set statusline+=%*
 set statusline+=%#warningmsg#
 set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
 set statusline+=%*
+
+" Airline theme
+let g:airline_theme='molokai'
 
 " Show hidden files
 let NERDTreeShowHidden=1
