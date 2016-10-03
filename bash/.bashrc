@@ -9,6 +9,10 @@ export LANG=en_US.UTF-8
 
 
 alias ls='ls --color=auto'
+alias ll='ls -la'
 PS1='[\u@\h \W]\$ '
 
 TERM=xterm-256color
+
+export NVM_DIR="/home/ubuntu/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
