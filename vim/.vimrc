@@ -38,7 +38,6 @@ if has("persistent_undo")
   set undofile
 endif
 
-
 let syntastic_stl_format = '[Syntax: %E{line:%fe }%W{#W:%w}%B{ }%E{#E:%e}]'
 
 " Nerdtree settings
@@ -62,10 +61,6 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " Close vim if NERDTree is only buffer
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" Arrows wont show on many platform
-"let g:NERDTreeDirArrowExpandable = '+'
-"let g:NERDTreeDirArrowCollapsible = '-'
 
 " Easyalign bindings
 xmap ga <Plug>(EasyAlign)
