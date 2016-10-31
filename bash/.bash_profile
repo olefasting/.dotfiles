@@ -4,4 +4,3 @@
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
-loadkeys no
