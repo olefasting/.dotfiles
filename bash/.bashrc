@@ -14,7 +14,7 @@ PS1='[\u@\h \W]\$ '
 
 TERM=xterm-256color
 
-
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd_hrgb'
 
 export NVM_DIR="/home/oasf/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
