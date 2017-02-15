@@ -17,7 +17,7 @@ alias ll='ls -la'
 # Arch specific
 if [ -f "/etc/arch-release" ]; then
   alias yao='yaourt --noconfirm'
-  alias pac='sudo pacman --noconfirm'
+  alias pac='sudo pacman'
 fi
 
 # Check for gopath
