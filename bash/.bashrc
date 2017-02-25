@@ -5,36 +5,27 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# Shell settings
-export TERM=xterm-256color
-
-# Prompt
-export PS1='[\u@\h \W]\$ '
-
-# Locale settings
-export LANG=en_US.UTF-8
-export LC_CTYPE=en_US.UTF-8
+# Environment
+source ~/.bashenv
 
 # Command aliases
 alias ls='ls --color=auto'
 alias ll='ls -la'
 
-# Arch specific
+# Arch (desktop) specific
 if [ -f "/etc/arch-release" ]; then
   alias yao='yaourt --noconfirm'
   alias pac='sudo pacman'
 fi
 
 # Check for gopath
-if [ ! -d "${HOME}/devel/gopath" ]; then
+if [ ! -d "${GOPATH}" ]; then
   # gopath does not exist
-  mkdir -p "${HOME}/devel/gopath/{bin,src,pkg}"
+  mkdir -p "${GOPATH}/src"
+  mkdir "${GOPATH}/bin"
+  mkdir "${GOPATH}/pkg"
 fi
-export GOPATH="${HOME}/devel/gopath"
 
 # Install nvm
 export NVM_DIR="/home/oasf/.nvm"
 [ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"
-
-# Update path variable
-export PATH="${PATH}:${GOPATH}/bin"
