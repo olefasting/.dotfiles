@@ -6,9 +6,14 @@
 [[ $- != *i* ]] && return
 
 # Shell settings
-export LANG=en_US.UTF-8
 export TERM=xterm-256color
+
+# Prompt
 export PS1='[\u@\h \W]\$ '
+
+# Locale settings
+export LANG=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
 
 # Command aliases
 alias ls='ls --color=auto'
