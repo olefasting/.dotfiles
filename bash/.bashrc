@@ -6,7 +6,7 @@
 [[ $- != *i* ]] && return
 
 # Environment
-source ~/.bashenv
+[[ -e ~/.bashenv ]] && . ~/.bashenv
 
 # Command aliases
 alias ls='ls --color=auto'
