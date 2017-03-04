@@ -7,9 +7,8 @@ SPACER='----------------------------------------------------------------'
 # Error handling
 # http://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
 abort() {
-    echo "${SPACER}"
-    echo >&2 'Aborting'
-    echo "An error occurred. Exiting" >&2
+    echo 'Aborting'
+    echo "An error occurred. Exiting"
     exit 1
 }
 
@@ -50,25 +49,26 @@ fi
 source script/filesystem.sh
 source script/distro.sh
 source script/flags.sh
+source script/install.sh
 
 # This function installs a dotfile. It needs two parameters; the path to the dotfile to be
 # installed, and the link name to use when installing.
 create_link() {
-	echo "- '${2}' => '${1}'" >&2
+	echo "- '${2}' => '${1}'"
 
 	# Check for required params
 	if [[ -z "${1}" ]]; then
-		echo "Error creating link: Dotfile path is empty" >&2
+		echo "Error creating link: Dotfile path is empty"
 		return 1
 	fi
 	if [[ -z "${2}" ]]; then
-		echo "Error creating link: Link name is empty" >&2
+		echo "Error creating link: Link name is empty"
 		return 1
 	fi
 
 	# Check that dotfile exists
 	if [[ ! -f "${1}" ]]; then
-		echo "Error creating link: The specified file does not exist" >&2
+		echo "Error creating link: The specified file does not exist"
 		return 1
 	fi
 	
@@ -95,6 +95,7 @@ determine_distro
 # Start
 echo "
 Starting setup for '${DISTRO}' in '${HOME}'"
+echo "${SPACER}"
 
 # Flags
 parse_flags
@@ -108,18 +109,9 @@ echo "
 Installing dependencies"
 echo "${SPACER}"
 
-{
-    if [[ "${DO_REINSTALL}" == 'true' ]] || [[ "${NO_PKG_UPGRADES}" != 'true' ]]; then
-        if [[ "${DISTRO}" == "${DISTRO_ARCH}" ]]; then
-            sudo pacman -S --noconfirm --quiet git
-            source script/arch/yaourt.sh
-            yaourt -S --noconfirm bash-completion
-        elif [[ "${DISTRO}" == "${DISTRO_UBUNTU}" ]] || [[ "${DISTRO}" == "${DISTRO_DEBIAN}" ]]; then
-            sudo apt-get install git
-            sudo apt-get install bash-completion
-        fi
-    fi
-} 2>&1 1> /dev/null
+install git
+install yaourt
+install bash-completion
 
 [[ "${DO_REINSTALL}" == 'true' ]] && echo "DO_REINSTALL='false'" > "${LOCAL_CONFIG}"
 
@@ -162,6 +154,6 @@ fi
 
 trap : 0
 
-echo >&2 '
+echo '
 Setup completed
 '

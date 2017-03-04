@@ -33,8 +33,6 @@ parse_flags() {
             echo "${flags["${i}"]}" >&2
 
             let "i+=1"
-        done
-        
-        echo "${SPACER}"
+        done        
     fi
 }
