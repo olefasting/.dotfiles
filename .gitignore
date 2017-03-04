@@ -1,6 +1,3 @@
-*.log
-*.key
-*.pem
-
-/sublime3/**/*
-!/sublime3/**/Preferences.sublime-settings
+backup
+build
+.local
