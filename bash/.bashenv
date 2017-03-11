@@ -34,13 +34,13 @@ complete -cf sudo man which
 if [ -f "/etc/arch-release" ]; then
   # Aliases
   alias yao='yaourt'
-  alias yaono='yaourt --noconfirm"
+  alias yaono='yaourt --noconfirm'
   alias pac='sudo pacman'
   alias pacno='sudo pacman --noconfirm'
 
   # Show info about any unavailable
   # commands run by user
-  source /usr/share/doc/pkgfile/command-not-found.bash
+  # source /usr/share/doc/pkgfile/command-not-found.bash
 fi
 
 # Update path variable
