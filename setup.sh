@@ -8,7 +8,7 @@ SPACER='----------------------------------------------------------------'
 # http://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
 abort() {
     echo 'Aborting'
-    echo "An error occurred. Exiting"
+    echo "An  unrecoverable error occurred. Exiting"
     exit 1
 }
 
@@ -67,17 +67,17 @@ create_link() {
 	fi
 
 	# Check that dotfile exists
-	if [[ ! -f "${1}" ]]; then
-		echo "Error creating link: The specified file does not exist"
+	if [[ ! -f "${1}" ]] && [[ ! -d "${1}" ]]; then
+		echo "Error creating link: The specified file or directory does not exist"
 		return 1
 	fi
 	
 	# Check for existing dotfile
-	if [[ -f "${2}" ]]; then
+	if [[ -f "${2}" ]] || [[ -d "${2}" ]]; then
 		if [[ ! -L "${2}" ]]; then
 			# Backup and delete
-			echo "File '${2}' already exists. Backing it up as '${2}.old'"
-			cp "${2}" "${2}.old"
+			echo "File or directory '${2}' already exists. Backing it up as '${2}.old' before overwrite"
+			cp -r "${2}" "${2}.old"
 		fi
 
 		rm -f "${2}"
@@ -135,6 +135,11 @@ if [[ "${NO_XORG}" != 'true' ]]; then
 	create_link "${ABS_PATH}/xorg/.xinitrc" "${HOME}/.xinitrc"
 	create_link "${ABS_PATH}/xorg/.xprofile" "${HOME}/.xprofile"	
 fi
+
+# vscode
+create_link "${ABS_PATH}/vscode/User/snippets" "${HOME}/.config/Code/User/snippets"
+create_link "${ABS_PATH}/vscode/User/settings.json" "${HOME}/.config/Code/User/settings.json"
+create_link "${ABS_PATH}/vscode/User/vsicons.settings.json" "${HOME}/.config/Code/User/vsicons.settings.json"
 
 # Apply bash env to plasma session
 if [[ "${KDE_SESSION}" == 'true' ]]; then

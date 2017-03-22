@@ -1,0 +1,18 @@
+// Place your settings in this file to overwrite the default settings
+{
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4,
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": true,
+    "editor.wrappingColumn": 300,
+    "editor.wordWrap": true,
+    "editor.mouseWheelZoom": true,
+    "editor.renderIndentGuides": false,
+    "eslint.enable": true,
+    "stylelint.enable": true,
+    "css.validate": true,
+    "window.zoomLevel": 0,
+    "go.useLanguageServer": false,
+    "go.gotoSymbol.includeImports": false,
+    "extensions.autoUpdate": false
+}
