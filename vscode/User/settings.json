@@ -24,5 +24,7 @@
     "stylelint.enable": true,
     "css.validate": true,
     "go.useLanguageServer": false,
-    "go.gotoSymbol.includeImports": false
+    "go.gotoSymbol.includeImports": false,
+    "rust.rustLangSrcPath": "/usr/src/rust",
+    "rust.cargoHomePath": "${HOME}/.cargo"
 }

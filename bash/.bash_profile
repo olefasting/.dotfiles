@@ -1,1 +1,1 @@
-[[ -e ~/.bashrc ]] && . ~/.bashrc
+[[ -e ~/.bashrc ]] && source ~/.bashrc
