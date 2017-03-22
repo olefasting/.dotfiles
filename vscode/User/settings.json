@@ -8,11 +8,11 @@
     "editor.wordWrap": true,
     "editor.mouseWheelZoom": true,
     "editor.renderIndentGuides": false,
+    "window.zoomLevel": 0,
+    "extensions.autoUpdate": true,
     "eslint.enable": true,
     "stylelint.enable": true,
     "css.validate": true,
-    "window.zoomLevel": 0,
     "go.useLanguageServer": false,
-    "go.gotoSymbol.includeImports": false,
-    "extensions.autoUpdate": false
+    "go.gotoSymbol.includeImports": false
 }
