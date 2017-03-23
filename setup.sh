@@ -109,9 +109,13 @@ echo "
 Installing dependencies"
 echo "${SPACER}"
 
-install git
-install yaourt
-install bash-completion
+if [[ "${DO_REINSTALL}" == 'true' ]] || [[ "${NO_PKG_UPGRADES}" != 'true' ]]; then
+    install git
+    install curl
+    install yaourt
+    install rust
+    install bash-completion
+fi
 
 [[ "${DO_REINSTALL}" == 'true' ]] && echo "DO_REINSTALL='false'" >"${LOCAL_CONFIG}"
 

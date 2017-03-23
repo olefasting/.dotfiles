@@ -15,8 +15,9 @@
     "editor.cursorStyle": "line",
     "editor.cursorBlinking": "blink",
     "window.zoomLevel": 0,
+    "window.openFoldersInNewWindow": "on",
     "explorer.openEditors.visible": 9,
-    "explorer.autoReveal": false,
+    "explorer.autoReveal": true,
     "workbench.colorTheme": "Darktooth",
     "workbench.iconTheme": "material-theme-icons",
     "extensions.autoUpdate": true,
@@ -25,6 +26,13 @@
     "css.validate": true,
     "go.useLanguageServer": false,
     "go.gotoSymbol.includeImports": false,
-    "rust.rustLangSrcPath": "/usr/src/rust",
-    "rust.cargoHomePath": "${HOME}/.cargo"
+    "rust.rustLangSrcPath": "/usr/src/rust/src",
+    "rust.cargoHomePath": "/home/oasf/.cargo",
+    "rust.showOutput": true,
+    "rust.executeCargoCommandInTerminal": false,
+    "rust.actionOnStartingCommandIfThereIsRunningCommand": "Stop running command",
+    "rust.actionOnSave": "build",
+    "rust.checkArgs": ["--verbose"],
+    "rust.clippyArgs": ["--verbose"],
+    "lldb.executable": "lldb"
 }
