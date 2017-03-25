@@ -19,20 +19,40 @@ if [ ! -d "${GOPATH}" ]; then
   mkdir "${GOPATH}/pkg"
 fi
 
-# Install nvm
-export NVM_DIR="${HOME}/.nvm"
-[ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"
+# nvm
+NVM_DIR="${HOME}/.nvm"
+if [[ -e "${NVM_DIR}" ]]; then
+    export NVM_DIR
+    [[ -s "${NVM_DIR}/nvm.sh" ]] && source "${NVM_DIR}/nvm.sh"
+fi
 
 # Rust toolchain via rustup
-export CARGOPATH="${HOME}/.cargo"
-export CARGOBIN="${CARGOPATH}/bin"
+CARGOPATH="${HOME}/.cargo"
+if [[ -d "${CARGOPATH}" ]]; then
+    export CARGOPATH
+
+    CARGOBIN="${CARGOPATH}/bin"
+    [[ -d "${CARGOBIN}" ]] && export CARGOBIN
+fi
+
 RUSTPATH=$(rustc --print sysroot)
-if [[ -e "${RUSTPATH}" ]]; then
-    # Rust source code
-    export RUSTSRC="${RUSTPATH}/lib/rustlib/src/rust/src"
-    # Env vars for the toolchain
+if [[ -d "${RUSTPATH}" ]]; then
     export LD_LIBRARY_PATH="${RUSTPATH}"
-    export RUST_SRC_PATH="${RUSTSRC}"
+
+    RUSTSRC="${RUSTPATH}/lib/rustlib/src/rust/src"
+    if [[ -d "${RUSTSRC}" ]]; then
+        export RUSTSRC
+        export RUST_SRC_PATH="${RUSTSRC}"
+    else
+        echo "Error setting RUSTSRC: '${RUSTSRC}' is an invalid path."
+    fi
+
+    RLS_ROOT="${HOME}/devel/rust/rls"
+    if [[ -d "${RLS_ROOT}" ]]; then
+        export RLS_ROOT
+    else
+        echo "Error setting RLS_ROOT: '${RLS_ROOT}' is an invalid path."
+    fi
 fi
 
 # Aliases
