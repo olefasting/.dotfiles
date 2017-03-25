@@ -6,11 +6,11 @@
     "editor.insertSpaces": true,
     "editor.wordWrap": "bounded",
     "editor.wrappingIndent": "indent",
-    "editor.wordWrapColumn": 160,
-    "editor.rulers": [160],
+    "editor.wordWrapColumn": 120,
+    "editor.rulers": [120],
     "editor.mouseWheelZoom": true,
-    "editor.renderIndentGuides": true,
-    "editor.minimap.enabled": true,
+    "editor.renderIndentGuides": false,
+    "editor.minimap.enabled": false,
     "editor.renderLineHighlight": "all",
     "editor.cursorStyle": "line",
     "editor.cursorBlinking": "blink",
@@ -18,8 +18,10 @@
     "window.openFoldersInNewWindow": "default",
     "explorer.openEditors.visible": 9,
     "explorer.autoReveal": true,
-    "workbench.colorTheme": "Darktooth",
+    "terminal.external.linuxExec": "konsole",
+    "workbench.colorTheme": "Monokai",
     "workbench.iconTheme": "material-theme-icons",
+    "update.channel": "default",
     "extensions.autoUpdate": true,
     "eslint.enable": true,
     "stylelint.enable": true,
@@ -27,12 +29,19 @@
     "css.validate": true,
     "go.useLanguageServer": false,
     "go.gotoSymbol.includeImports": false,
-    "rust.actionOnSave": "clippy",
-    "rust.showOutput": true,
+    "lldb.executable": "lldb",
+    "rust.showOutput": false,
+    "rust.actionOnSave": null,
+    "rust.cargoHomePath": "/home/oasf/.cargo",
+    "rust.rustLangSrcPath": "/home/oasf/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src",
     "rust.executeCargoCommandInTerminal": true,
     "rust.actionOnStartingCommandIfThereIsRunningCommand": "Stop running command",
-    "lldb.executable": "lldb",
-    "[plaintext]": {
-
+    "rust.rls": {
+        "executable": "rustup",
+        "args": ["run", "nightly", "rls"],
+        "revealOutputChannelOn": "warn"
+    },
+    "files.associations": {
+        ".*": "shellscript"
     }
 }
