@@ -23,14 +23,16 @@
     "extensions.autoUpdate": true,
     "eslint.enable": true,
     "stylelint.enable": true,
+    "git.autofetch": false,
     "css.validate": true,
     "go.useLanguageServer": false,
     "go.gotoSymbol.includeImports": false,
     "rust.actionOnSave": "clippy",
-    "rust.rustLangSrcPath": "/usr/src/rust/src",
-    "rust.cargoHomePath": "/home/oasf/.cargo",
     "rust.showOutput": true,
     "rust.executeCargoCommandInTerminal": true,
     "rust.actionOnStartingCommandIfThereIsRunningCommand": "Stop running command",
-    "lldb.executable": "lldb"
+    "lldb.executable": "lldb",
+    "[plaintext]": {
+
+    }
 }
