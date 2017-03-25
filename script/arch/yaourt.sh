@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 {
     [[ ! -e build ]] && mkdir build
     cd build

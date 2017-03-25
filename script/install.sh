@@ -1,27 +1,44 @@
-install() {
-	local package="${1}"
+install_package() {
+	local package_name="${1}"
 
-    if [[ "${DISTRO}" == "${DISTRO_ARCH}" ]]; then
-        if [[ "${package}" == 'git' ]]; then
-            sudo pacman -S --noconfirm --quiet git
-        elif [[ "${package}" == 'curl' ]]; then
-            sudo pacman -S --noconfirm --quiet curl
-        elif [[ "${package}" == 'yaourt' ]]; then                
-            source script/arch/yaourt.sh
-        elif [[ "${package}" == 'bash-completion' ]]; then
-            yaourt -S --noconfirm bash-completion
-        fi
-    elif [[ "${DISTRO}" == "${DISTRO_UBUNTU}" ]] || [[ "${DISTRO}" == "${DISTRO_DEBIAN}" ]]; then
-        if [[ "${package}" == 'git' ]]; then
-            sudo apt-get install git
-        elif [[ "${package}" == 'curl' ]]; then
-            sudo apt-get install curl
-        elif [[ "${package}" == 'bash-completion' ]]; then
-            sudo apt-get install bash-completion            
-        fi
-    fi
+	# Universal packages
+	if [[ "${package_name}" == "rust" ]]; then
+		if [[ ! -e "$(which rustup)" ]]; then
+			# install rustup and toolchain
+			curl https://sh.rustup.rs -sSf | sh
+			rustup default stable
+			rustup install nightly
+			rustup default nightly
+		else
+			# Update rustup and toolchain
+			rustup self update
+			rustup update stable
+			rustup update nightly
+		fi
 
-    if [[ "${package}" == 'rustup' ]]; then
-        curl https://sh.rustup.rs -sSf | sh
-    fi
+		# Install or update components
+		rustup component add rust-src
+		rustup component add rust-analysis
+	else
+		# Install non-standard or distro specific package
+		if [[ "${DISTRO}" == "${DISTRO_ARCH}" ]]; then
+			if [[ "${package_name}" == "sync" ]]; then
+				sudo pacman -Syy --quiet
+			elif [[ "${package_name}" == "yaourt" ]]; then
+				source "${ABS_PATH}/arch/yaourt.sh"
+			else
+				sudo pacman -S --needed --noconfirm --quiet "${package_name}"
+			fi
+		elif [[ "${DISTRO}" == "${DISTRO_UBUNTU}" ]] || [[ "${DISTRO}" == "${DISTRO_DEBIAN}" ]]; then
+			if [[ "${package_name}" == "sync" ]]; then
+				sudo apt-get -qq update
+			else
+				sudo apt-get --assume-yes -qq "${package_name}"
+			fi
+		fi
+
+		return 0
+	fi
+
+	return 0
 } 2>&1 1>/dev/null

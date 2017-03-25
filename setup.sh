@@ -1,20 +1,14 @@
 #!/usr/bin/env bash
-
-LOCAL_CONFIG='.local'
-
 SPACER='----------------------------------------------------------------'
 
 # Error handling
 # http://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
 abort() {
-	echo 'Aborting'
-	echo "An  unrecoverable error occurred. Exiting"
+	echo "ERROR: Setup was interrupted"
 	exit 1
 }
 
 trap 'abort' 0
-
-set -e
 
 # Check that user is not root
 if [[ "${EUID}" == "0" ]]; then
@@ -39,10 +33,12 @@ if [[ ! -d "${ABS_PATH}" ]]; then
 fi
 
 # Local config
+[[ -d "${ABS_PATH}" ]] && LOCAL_CONFIG="${ABS_PATH}/.local"
 if [[ -f "${LOCAL_CONFIG}" ]]; then
 	source "${LOCAL_CONFIG}"
 else
-	DO_REINSTALL='true'
+	# Default config
+	INSTALL_DEPS="true"
 fi
 
 # Source scripts
@@ -104,20 +100,28 @@ parse_flags
 create_dir "${ABS_PATH}/backup"
 create_dir "${ABS_PATH}/build"
 
-# Install deps
-echo "
-Installing dependencies"
-echo "${SPACER}"
+if [[ "${INSTALL_DEPS}" == "true" ]]; then
+    # Install deps
+    echo "
+Installing dependencies:"
+    echo "${SPACER}"
 
-if [[ "${DO_REINSTALL}" == 'true' ]] || [[ "${NO_PKG_UPGRADES}" != 'true' ]]; then
-    install git
-    install curl
-    install yaourt
-    install rust
-    install bash-completion
+	# Refresh repos
+	install_package sync
+
+	# Install dependencies
+	install_package git
+	install_package curl
+	install_package rust
+	install_package bash-completion
+	install_package yaourt
+
+    echo "
+Done installing dependencies
+    "
 fi
 
-[[ "${DO_REINSTALL}" == 'true' ]] && echo "DO_REINSTALL='false'" >"${LOCAL_CONFIG}"
+[[ "${INSTALL_DEPS}" == "true" ]] && echo INSTALL_DEPS="false" >"${LOCAL_CONFIG}"
 
 # Create bash profile
 echo '
@@ -135,7 +139,7 @@ create_link "${ABS_PATH}/vim/.vimrc" "${HOME}/.vimrc"
 create_link "${ABS_PATH}/tmux/.tmux.conf" "${HOME}/.tmux.conf"
 
 # xorg
-if [[ "${NO_XORG}" != 'true' ]]; then
+if [[ "${NO_XORG}" != "true" ]]; then
 	create_link "${ABS_PATH}/xorg/.xinitrc" "${HOME}/.xinitrc"
 	create_link "${ABS_PATH}/xorg/.xprofile" "${HOME}/.xprofile"
 fi
@@ -146,7 +150,7 @@ create_link "${ABS_PATH}/vscode/User/settings.json" "${HOME}/.config/Code/User/s
 create_link "${ABS_PATH}/vscode/User/vsicons.settings.json" "${HOME}/.config/Code/User/vsicons.settings.json"
 
 # Apply bash env to plasma session
-if [[ "${KDE_SESSION}" == 'true' ]]; then
+if [[ "${KDE_SESSION}" == "true" ]]; then
 	[[ -e "${HOME}/.config/plasma-workspace/env/" ]] || mkdir -p "${HOME}/.config/plasma-workspace/env/"
 	[[ -e "${HOME}/.config/plasma-workspace/env/xprofile.sh" ]] && rm -f "${HOME}/.config/plasma-workspace/env/xprofile.sh"
 
