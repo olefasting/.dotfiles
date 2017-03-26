@@ -25,11 +25,17 @@
     "extensions.autoUpdate": true,
     "eslint.enable": true,
     "stylelint.enable": true,
-    "git.autofetch": false,
+    "git.autofetch": true,
+    "gitProjectManager.baseProjectsFolders": [
+        "/home/oasf/devel/polygo",
+        "/home/oasf/devel/procedura",
+        "/home/oasf/devel/colludium"
+    ],
+    "gitProjectManager.unversionedProjects": [],
     "css.validate": true,
     "go.useLanguageServer": false,
     "go.gotoSymbol.includeImports": false,
-    "lldb.executable": "lldb",
+    "lldb.executable": "/usr/bin/lldb",
     "rust.showOutput": false,
     "rust.actionOnSave": null,
     "rust.cargoHomePath": "/home/oasf/.cargo",
@@ -43,5 +49,34 @@
     },
     "files.associations": {
         ".*": "shellscript"
-    }
+    },
+    "sync.gist": "da432f5bd0ae03d8aa76aa8f9183704c",
+    "sync.lastUpload": "2017-03-25T15:16:39.451Z",
+    "sync.autoDownload": false,
+    "sync.autoUpload": false,
+    "sync.lastDownload": "",
+    "sync.version": 261,
+    "sync.showSummary": true,
+    "sync.forceDownload": false,
+    "sync.anonymousGist": false,
+    "sync.host": "",
+    "sync.pathPrefix": "",
+    "cSpell.enabledLanguageIds": [
+        "c",
+        "cpp",
+        "csharp",
+        "go",
+        "javascript",
+        "javascriptreact",
+        "json",
+        "latex",
+        "markdown",
+        "php",
+        "plaintext",
+        "python",
+        "text",
+        "typescript",
+        "typescriptreact",
+        "yml"
+    ]
 }

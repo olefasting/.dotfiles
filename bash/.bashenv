@@ -13,7 +13,7 @@ export GOPATH="${HOME}/devel/gopath"
 export GOBIN="${GOPATH}/bin"
 
 # Create gopath if needed
-if [ ! -d "${GOPATH}" ]; then
+if [[ ! -d "${GOPATH}" ]]; then
   mkdir -p "${GOPATH}/src"
   mkdir "${GOPATH}/bin"
   mkdir "${GOPATH}/pkg"
@@ -30,14 +30,13 @@ fi
 CARGOPATH="${HOME}/.cargo"
 if [[ -d "${CARGOPATH}" ]]; then
     export CARGOPATH
-
     CARGOBIN="${CARGOPATH}/bin"
     [[ -d "${CARGOBIN}" ]] && export CARGOBIN
 fi
 
 RUSTPATH=$(rustc --print sysroot)
 if [[ -d "${RUSTPATH}" ]]; then
-    export LD_LIBRARY_PATH="${RUSTPATH}"
+    export LD_LIBRARY_PATH="${RUSTPATH}/lib"
 
     RUSTSRC="${RUSTPATH}/lib/rustlib/src/rust/src"
     if [[ -d "${RUSTSRC}" ]]; then
@@ -47,37 +46,82 @@ if [[ -d "${RUSTPATH}" ]]; then
         echo "Error setting RUSTSRC: '${RUSTSRC}' is an invalid path."
     fi
 
-    RLS_ROOT="${HOME}/devel/rust/rls"
+    RLS_ROOT="${HOME}/install/rls"
     if [[ -d "${RLS_ROOT}" ]]; then
         export RLS_ROOT
     else
-        echo "Error setting RLS_ROOT: '${RLS_ROOT}' is an invalid path."
+        echo "Error setting RLS_ROOT: '${RLS_ROOT}' is an invalid path. Please clone rls from git first and rerun the script, if Rust Language Server is needed"
     fi
 fi
+
+_asdf () {
+  local cur=${COMP_WORDS[COMP_CWORD]}
+  local cmd=${COMP_WORDS[1]}
+  local prev=${COMP_WORDS[COMP_CWORD-1]}
+  local plugins=$(asdf plugin-list | tr '\n' ' ')
+
+  COMPREPLY=()
+
+  case "$cmd" in
+    plugin-update)
+      COMPREPLY=($(compgen -W "$plugins --all" -- $cur))
+      ;;
+    plugin-remove|current|list|list-all)
+      COMPREPLY=($(compgen -W "$plugins" -- $cur))
+      ;;
+    install)
+      if [[ "$plugins" == *"$prev"* ]] ; then
+        local versions=$(asdf list-all $prev)
+        COMPREPLY=($(compgen -W "$versions" -- $cur))
+      else
+        COMPREPLY=($(compgen -W "$plugins" -- $cur))
+      fi
+      ;;
+    uninstall|where|reshim)
+      if [[ "$plugins" == *"$prev"* ]] ; then
+        local versions=$(asdf list $prev)
+        COMPREPLY=($(compgen -W "$versions" -- $cur))
+      else
+        COMPREPLY=($(compgen -W "$plugins" -- $cur))
+      fi
+      ;;
+    *)
+      local cmds='plugin-add plugin-list plugin-remove plugin-update install uninstall current where list list-all reshim'
+      COMPREPLY=($(compgen -W "$cmds" -- $cur))
+      ;;
+  esac
+
+  return 0
+}
+
+# Autocomplete
+complete -cf sudo man which
+complete -F _asdf asdf
 
 # Aliases
 alias ls='ls --color=auto'
 alias ll='ls -la'
 
-# Autocomplete
-complete -cf sudo man which
-
 # Arch specific
-if [ -f "/etc/arch-release" ]; then
+if [[ -f "/etc/arch-release" ]]; then
     # Aliases
     alias yao='yaourt'
-    alias yaono='yaourt --noconfirm'
     alias pac='sudo pacman'
-    alias pacno='sudo pacman --noconfirm'
-
-
-    # ssh gui dialogue
-    export SSH_ASKPASS="/usr/bin/ksshaskpass"
-
-    # Show info about any unavailable
-    # commands run by user
-    # source /usr/share/doc/pkgfile/command-not-found.bash
 fi
 
+if [ "${BASH_SOURCE[0]}" != "" ]; then
+    script="${BASH_SOURCE[0]}"
+else
+    script="${0}"
+fi
+asdf=$(cd $(dirname $script) &> /dev/null; echo "${PWD}")
+
+# ssh gui dialogue
+export SSH_ASKPASS="/usr/bin/ksshaskpass"
+
+# Show info about any unavailable
+# commands run by user
+# source /usr/share/doc/pkgfile/command-not-found.bash
+
 # Update path variable
-export PATH="${PATH}:${GOBIN}:${CARGOBIN}"
+export PATH="${PATH}:${asdf}/bin:${asdf}/shims:${GOBIN}:${CARGOBIN}"
