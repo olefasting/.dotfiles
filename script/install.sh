@@ -33,7 +33,7 @@ install_package() {
 			if [[ "${package_name}" == "sync" ]]; then
 				sudo apt-get -qq update
 			else
-				sudo apt-get --assume-yes -qq "${package_name}"
+				sudo apt-get -qq "${package_name}"
 			fi
 		fi
 
