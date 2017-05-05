@@ -23,6 +23,14 @@ if [[ ! -d "${GOPATH}" ]]; then
 fi
 
 # nvm
+if [[ ! -e $(which nvm) ]]; then
+    if [[ -e $(which curl) ]]; then
+        curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+    elif [[ -e $(which wget) ]]; then
+        wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+    fi
+fi
+
 NVM_DIR="${HOME}/.nvm"
 if [[ -e "${NVM_DIR}" ]]; then
     export NVM_DIR
