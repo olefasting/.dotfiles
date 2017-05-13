@@ -127,4 +127,4 @@ export SSH_ASKPASS="/usr/bin/ksshaskpass"
 # source /usr/share/doc/pkgfile/command-not-found.bash
 
 # Update path variable
-export PATH="${PATH}:${asdf}/bin:${asdf}/shims:${GOBIN}:${CARGOBIN}"
+export PATH="${PATH}:/home/oasf/.nimble/bin:${asdf}/bin:${asdf}/shims:${GOBIN}:${CARGOBIN}"

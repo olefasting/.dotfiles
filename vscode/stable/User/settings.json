@@ -3,5 +3,12 @@
     "editor.formatOnSave": true,
     "editor.detectIndentation": false,
     "editor.renderIndentGuides": true,
-    "workbench.iconTheme": "simple-icons"
+    "workbench.iconTheme": "simple-icons",
+    "[cpp]": {
+        "editor.quickSuggestions": false
+    },
+    "[c]": {
+        "editor.quickSuggestions": false
+    },
+    "material-icon-theme.showUpdateMessage": false
 }
