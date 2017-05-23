@@ -37,25 +37,7 @@ if [[ -d "${CARGOPATH}" ]]; then
     [[ -d "${CARGOBIN}" ]] && export CARGOBIN
 fi
 
-RUSTPATH=$(rustc --print sysroot)
-if [[ -d "${RUSTPATH}" ]]; then
-    export LD_LIBRARY_PATH="${RUSTPATH}/lib"
-
-    RUSTSRC="${RUSTPATH}/lib/rustlib/src/rust/src"
-    if [[ -d "${RUSTSRC}" ]]; then
-        export RUSTSRC
-        export RUST_SRC_PATH="${RUSTSRC}"
-    else
-        echo "Error setting RUSTSRC: '${RUSTSRC}' is an invalid path."
-    fi
-
-    RLS_ROOT="${HOME}/install/rls"
-    if [[ -d "${RLS_ROOT}" ]]; then
-        export RLS_ROOT
-    else
-        echo "Error setting RLS_ROOT: '${RLS_ROOT}' is an invalid path. Please clone rls from git first and rerun the script, if Rust Language Server is needed"
-    fi
-fi
+RABBITMQ_HOME=${HOME}/devel/rabbitmq_server-3.2.4
 
 _asdf () {
     local cur=${COMP_WORDS[COMP_CWORD]}
