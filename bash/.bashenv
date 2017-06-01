@@ -52,6 +52,16 @@ else
     echo "Warning! Node Version Manager (nvm) is not installed!"
 fi
 
+# Rust toolchain via rustup
+CARGOPATH="${HOME}/.cargo"
+if [[ -d "${CARGOPATH}" ]]; then
+    export CARGOPATH
+    CARGOBIN="${CARGOPATH}/bin"
+    [[ -d "${CARGOBIN}" ]] && export CARGOBIN
+fi
+
+RABBITMQ_HOME=${HOME}/devel/rabbitmq_server-3.2.4
+
 _asdf () {
     local cur=${COMP_WORDS[COMP_CWORD]}
     local cmd=${COMP_WORDS[1]}
@@ -107,4 +117,4 @@ export SSH_ASKPASS="/usr/bin/ksshaskpass"
 # source /usr/share/doc/pkgfile/command-not-found.bash
 
 # Update path variable
-export PATH="${PATH}:${NIMBIN}:${asdf}/bin:${asdf}/shims:${GOBIN}"
+export PATH="${PATH}:${NIMBIN}:${asdf}/bin:${asdf}/shims:${GOBIN}:${RABBITMQ_HOME}/sbin"
