@@ -11,6 +11,24 @@ export LC_CTYPE=en_US.UTF-8
 export CLASSPATH=$CLASSPATH:/usr/share/java/mysql.jar
 export LOOPS_HOME=/srv/loops_home
 
+# Autocomplete
+complete -cf sudo man which
+complete -F _asdf asdf
+
+# Aliases
+alias ls='ls --color=auto'
+alias ll='ls -la'
+alias psa='ps -aux'
+
+alias choosenim-install='curl https://nim-lang.org/choosenim/init.sh -sSf | sh'
+
+# Arch specific
+if [[ -f "/etc/arch-release" ]]; then
+    # Aliases
+    alias yao='yaourt'
+    alias pac='sudo pacman'
+fi
+
 # Gopath
 export GOPATH="${HOME}/devel/gopath"
 export GOBIN="${GOPATH}/bin"
@@ -22,39 +40,16 @@ if [[ ! -d "${GOPATH}" ]]; then
     mkdir "${GOPATH}/pkg"
 fi
 
-# nvm
+# nim
+NIMBIN=${HOME}/.nimble/bin
+
+# node.js
 NVM_DIR="${HOME}/.nvm"
 if [[ -e "${NVM_DIR}" ]]; then
-    export NVM_DIR
     [[ -s "${NVM_DIR}/nvm.sh" ]] && source "${NVM_DIR}/nvm.sh"
+    export NVM_DIR
 fi
-
-# Rust toolchain via rustup
-CARGOPATH="${HOME}/.cargo"
-if [[ -d "${CARGOPATH}" ]]; then
-    export CARGOPATH
-    CARGOBIN="${CARGOPATH}/bin"
-    [[ -d "${CARGOBIN}" ]] && export CARGOBIN
-fi
-
-RUSTPATH=$(rustc --print sysroot)
-if [[ -d "${RUSTPATH}" ]]; then
-    export LD_LIBRARY_PATH="${RUSTPATH}/lib"
-
-    RUSTSRC="${RUSTPATH}/lib/rustlib/src/rust/src"
-    if [[ -d "${RUSTSRC}" ]]; then
-        export RUSTSRC
-        export RUST_SRC_PATH="${RUSTSRC}"
-    else
-        echo "Error setting RUSTSRC: '${RUSTSRC}' is an invalid path."
-    fi
-
-    RLS_ROOT="${HOME}/install/rls"
-    if [[ -d "${RLS_ROOT}" ]]; then
-        export RLS_ROOT
-    else
-        echo "Error setting RLS_ROOT: '${RLS_ROOT}' is an invalid path. Please clone rls from git first and rerun the script, if Rust Language Server is needed"
-    fi
+    echo "Warning! Node Version Manager (nvm) is not installed!"
 fi
 
 _asdf () {
@@ -97,21 +92,6 @@ _asdf () {
     return 0
 }
 
-# Autocomplete
-complete -cf sudo man which
-complete -F _asdf asdf
-
-# Aliases
-alias ls='ls --color=auto'
-alias ll='ls -la'
-
-# Arch specific
-if [[ -f "/etc/arch-release" ]]; then
-    # Aliases
-    alias yao='yaourt'
-    alias pac='sudo pacman'
-fi
-
 if [ "${BASH_SOURCE[0]}" != "" ]; then
     script="${BASH_SOURCE[0]}"
 else
@@ -127,4 +107,4 @@ export SSH_ASKPASS="/usr/bin/ksshaskpass"
 # source /usr/share/doc/pkgfile/command-not-found.bash
 
 # Update path variable
-export PATH="${PATH}:/home/oasf/.nimble/bin:${asdf}/bin:${asdf}/shims:${GOBIN}:${CARGOBIN}"
+export PATH="${PATH}:${NIMBIN}:${asdf}/bin:${asdf}/shims:${GOBIN}"

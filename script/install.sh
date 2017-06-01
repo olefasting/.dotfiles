@@ -3,22 +3,12 @@ install_package() {
 
 	# Universal packages
 	if [[ "${package_name}" == "rust" ]]; then
-		if [[ ! -e "$(which rustup)" ]]; then
-			# install rustup and toolchain
-			curl https://sh.rustup.rs -sSf | sh
-			rustup default stable
-			rustup install nightly
-			rustup default nightly
-		else
-			# Update rustup and toolchain
-			rustup self update
-			rustup update stable
-			rustup update nightly
-		fi
-
-		# Install or update components
-		rustup component add rust-src
-		rustup component add rust-analysis
+        # choosenim (nim version manager)
+        if [[ ! -e "$(which choosenim)" ]]; then
+            curl https://nim-lang.org/choosenim/init.sh -sSf | sh
+            choosenim refresh
+            choosenim stable
+        fi
 	else
 		# Install non-standard or distro specific package
 		if [[ "${DISTRO}" == "${DISTRO_ARCH}" ]]; then

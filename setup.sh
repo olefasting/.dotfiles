@@ -131,6 +131,7 @@ create_link "${ABS_PATH}/bash/.bashrc" "${HOME}/.bashrc"
 create_link "${ABS_PATH}/bash/.bashenv" "${HOME}/.bashenv"
 create_link "${ABS_PATH}/bash/.bash_profile" "${HOME}/.bash_profile"
 create_link "${ABS_PATH}/bash/.bash_logout" "${HOME}/.bash_logout"
+source "${HOME}/.bash_profile"
 
 # vim
 create_link "${ABS_PATH}/vim/.vimrc" "${HOME}/.vimrc"
