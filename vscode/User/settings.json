@@ -1,5 +1,6 @@
 // Place your settings in this file to overwrite the default settings
 {
+    "editor.fontSize": 16,
     "editor.formatOnSave": true,
     "editor.tabSize": 4,
     "editor.wordWrap": "bounded",

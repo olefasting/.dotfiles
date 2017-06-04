@@ -52,13 +52,8 @@ else
     echo "Warning! Node Version Manager (nvm) is not installed!"
 fi
 
-# Rust toolchain via rustup
-CARGOPATH="${HOME}/.cargo"
-if [[ -d "${CARGOPATH}" ]]; then
-    export CARGOPATH
-    CARGOBIN="${CARGOPATH}/bin"
-    [[ -d "${CARGOBIN}" ]] && export CARGOBIN
-fi
+export ANDROID_NDK=/opt/android-ndk-beta
+export ANDROID_TOOLCHAINS=${ANDROID_NDK}/toolchains
 
 RABBITMQ_HOME=${HOME}/devel/rabbitmq_server-3.2.4
 
