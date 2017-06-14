@@ -40,6 +40,9 @@ if [[ ! -d "${GOPATH}" ]]; then
     mkdir "${GOPATH}/pkg"
 fi
 
+# Android sDK
+export ANDROID_SDK_ROOT=${HOME}/Android/Sdk
+
 # nim
 NIMBIN=${HOME}/.nimble/bin
 
