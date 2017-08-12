@@ -1,30 +1,34 @@
 // Place your settings in this file to overwrite the default settings
 {
-  "editor.fontSize": 16,
-  "editor.formatOnSave": true,
-  //"editor.tabSize": 4,
-  "editor.wordWrap": "bounded",
-  //"editor.rulers": [120],
-  //"editor.wordWrapColumn": 120,
-  "editor.insertSpaces": true,
-  "editor.detectIndentation": false,
-  "editor.wrappingIndent": "indent",
-  "editor.mouseWheelZoom": true,
-  "editor.renderLineHighlight": "all",
-  "editor.cursorStyle": "line",
-  "editor.cursorBlinking": "blink",
-  "window.zoomLevel": 0,
-  "window.openFoldersInNewWindow": "default",
-  "explorer.openEditors.visible": 9,
-  "explorer.autoReveal": true,
-  "terminal.external.linuxExec": "konsole",
-  "workbench.colorTheme": "Darktooth",
-  "workbench.iconTheme": "simple-icons",
-  "update.channel": "default",
-  "extensions.autoUpdate": true,
-  "git.autofetch": false,
-  "css.validate": true,
-  "files.associations": {
-    ".*": "shellscript"
-  }
+    "editor.fontSize": 16,
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4,
+    "editor.wordWrap": "bounded",
+    "editor.rulers": [
+        120
+    ],
+    "editor.wordWrapColumn": 120,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.wrappingIndent": "indent",
+    "editor.mouseWheelZoom": true,
+    "editor.renderLineHighlight": "all",
+    "editor.cursorStyle": "line",
+    "editor.cursorBlinking": "blink",
+    "window.zoomLevel": 0,
+    "window.openFoldersInNewWindow": "default",
+    "explorer.openEditors.visible": 9,
+    "explorer.autoReveal": true,
+    "terminal.external.linuxExec": "konsole",
+    "workbench.colorTheme": "Darktooth",
+    "update.channel": "default",
+    "extensions.autoUpdate": true,
+    "git.autofetch": false,
+    "css.validate": true,
+    "files.associations": {
+        ".*": "shellscript"
+    },
+    "workbench.iconTheme": "file-icons",
+    "crystal-lang.verifyFiles": true,
+    "git.enableSmartCommit": true
 }
