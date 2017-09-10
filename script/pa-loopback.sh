@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-
-mkdir -p ${HOME}/.config/pulse
-echo load-module module-loopback > ${HOME}/.config/pulse/loopback.pa
-pactl load-module module-loopback
+path="${HOME}/unload-loopback.sh"
+echo "#!/usr/bin/env bash" > ${path}
+echo pactl unload-module $(pactl load-module module-loopback) >> ${path}
+chmod +x "${path}"
+echo "PulseAudio loopback module loaded. Execute ${path} to unload it"
