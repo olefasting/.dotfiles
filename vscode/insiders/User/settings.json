@@ -1,0 +1,12 @@
+{
+    "window.zoomLevel": 2,
+    "workbench.colorTheme": "Darktooth",
+    "workbench.iconTheme": "file-icons",
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.wordWrap": "bounded",
+    "editor.rulers": [
+        120
+    ],
+    "editor.wordWrapColumn": 120
+}

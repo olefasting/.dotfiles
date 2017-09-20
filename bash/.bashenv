@@ -115,4 +115,5 @@ export SSH_ASKPASS="/usr/bin/ksshaskpass"
 # source /usr/share/doc/pkgfile/command-not-found.bash
 
 # Update path variable
+export PATH="${PATH}:/opt/vscode-insiders"
 export PATH="${PATH}:${NIMBIN}:${asdf}/bin:${asdf}/shims:${GOBIN}:${RABBITMQ_HOME}/sbin"
