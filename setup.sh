@@ -155,11 +155,6 @@ if [[ "${NO_XORG}" != "true" ]]; then
     create_link "${ABS_PATH}/xorg/.xprofile" "${HOME}/.xprofile"
 fi
 
-# vscode
-create_link "${ABS_PATH}/vscode/User/snippets" "${HOME}/.config/Code/User/snippets"
-create_link "${ABS_PATH}/vscode/User/settings.json" "${HOME}/.config/Code/User/settings.json"
-create_link "${ABS_PATH}/vscode/User/vsicons.settings.json" "${HOME}/.config/Code/User/vsicons.settings.json"
-
 # Apply bash env to plasma session
 if [[ "${KDE_SESSION}" == "true" ]]; then
     [[ -e "${HOME}/.config/plasma-workspace/env/" ]] || mkdir -p "${HOME}/.config/plasma-workspace/env/"
