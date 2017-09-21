@@ -4,41 +4,41 @@ SPACER='----------------------------------------------------------------'
 # Error handling
 # http://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
 abort() {
-	echo "ERROR: Setup was interrupted"
-	exit 1
+    echo "ERROR: Setup was interrupted"
+    exit 1
 }
 
 trap 'abort' 0
 
 # Check that user is not root
 if [[ "${EUID}" == "0" ]]; then
-	echo "Please call this script as a regular user."
-	exit 1
+    echo "Please call this script as a regular user."
+    exit 1
 fi
 
 # Determine absolute path
 if [[ ! -d "${ABS_PATH}" ]]; then
-	ABS_PATH="${BASH_SOURCE[0]}"
-
-	if [ -h "${ABS_PATH}" ]; then
-		while [ -h "${ABS_PATH}" ]; do
-			ABS_PATH=$(readlink "${ABS_PATH}")
-		done
-	fi
-
-	pushd . >/dev/null
-	cd $(dirname ${ABS_PATH}) >/dev/null
-	ABS_PATH=$(pwd)
-	popd >/dev/null
+    ABS_PATH="${BASH_SOURCE[0]}"
+    
+    if [ -h "${ABS_PATH}" ]; then
+        while [ -h "${ABS_PATH}" ]; do
+            ABS_PATH=$(readlink "${ABS_PATH}")
+        done
+    fi
+    
+    pushd . >/dev/null
+    cd $(dirname ${ABS_PATH}) >/dev/null
+    ABS_PATH=$(pwd)
+    popd >/dev/null
 fi
 
 # Local config
 [[ -d "${ABS_PATH}" ]] && LOCAL_CONFIG="${ABS_PATH}/.local"
 if [[ -f "${LOCAL_CONFIG}" ]]; then
-	source "${LOCAL_CONFIG}"
+    source "${LOCAL_CONFIG}"
 else
-	# Default config
-	INSTALL_DEPS="true"
+    # Default config
+    INSTALL_DEPS="true"
 fi
 
 # Source scripts
@@ -50,39 +50,39 @@ source script/install.sh
 # This function installs a dotfile. It needs two parameters; the path to the dotfile to be
 # installed, and the link name to use when installing.
 create_link() {
-	echo "- '${2}' => '${1}'"
-
-	# Check for required params
-	if [[ -z "${1}" ]]; then
-		echo "Error creating link: Dotfile path is empty"
-		return 1
-	fi
-	if [[ -z "${2}" ]]; then
-		echo "Error creating link: Link name is empty"
-		return 1
-	fi
-
-	# Check that dotfile exists
-	if [[ ! -e "${1}" ]]; then
-		echo "Error creating link: The specified file or directory does not exist"
-		return 1
-	fi
-
-	# Check for existing dotfile
-	if [[ -e "${2}" ]]; then
-		if [[ ! -L "${2}" ]]; then
-			# Backup and delete
-			echo "File or directory '${2}' already exists. Backing it up as '${2}.old' before overwrite"
-			cp -r "${2}" "${2}.old"
-		fi
-
-		rm -f "${2}"
-	fi
-
-	# Create link
-	ln -s "${1}" "${2}"
-
-	return 0
+    echo "- '${2}' => '${1}'"
+    
+    # Check for required params
+    if [[ -z "${1}" ]]; then
+        echo "Error creating link: Dotfile path is empty"
+        return 1
+    fi
+    if [[ -z "${2}" ]]; then
+        echo "Error creating link: Link name is empty"
+        return 1
+    fi
+    
+    # Check that dotfile exists
+    if [[ ! -e "${1}" ]]; then
+        echo "Error creating link: The specified file or directory does not exist"
+        return 1
+    fi
+    
+    # Check for existing dotfile
+    if [[ -e "${2}" ]]; then
+        if [[ ! -L "${2}" ]]; then
+            # Backup and delete
+            echo "File or directory '${2}' already exists. Backing it up as '${2}.old' before overwrite"
+            cp -r "${2}" "${2}.old"
+        fi
+        
+        rm -f "${2}"
+    fi
+    
+    # Create link
+    ln -s "${1}" "${2}"
+    
+    return 0
 }
 
 # Determine distro
@@ -103,19 +103,19 @@ create_dir "${ABS_PATH}/build"
 if [[ "${INSTALL_DEPS}" == "true" ]]; then
     # Install deps
     echo "
-Installing dependencies:"
+    Installing dependencies:"
     echo "${SPACER}"
-
-	# Refresh repos
-	install_package sync
-
-	# Install dependencies
-	install_package git
-	install_package curl
-	install_package rust
-	install_package bash-completion
-	install_package yaourt
-
+    
+    # Refresh repos
+    install_package sync
+    
+    # Install dependencies
+    install_package git
+    install_package curl
+    install_package rust
+    install_package bash-completion
+    install_package yaourt
+    
     echo "
 Done installing dependencies
     "
@@ -133,6 +133,16 @@ create_link "${ABS_PATH}/bash/.bash_profile" "${HOME}/.bash_profile"
 create_link "${ABS_PATH}/bash/.bash_logout" "${HOME}/.bash_logout"
 source "${HOME}/.bash_profile"
 
+# vscode
+mkdir -p "${HOME}/.config/Code/User"
+create_link "${ABS_PATH}/vscode/snippets" "${HOME}/.config/Code/User/snippets"
+create_link "${ABS_PATH}/vscode/settings.json" "${HOME}/.config/Code/User/settings.json"
+
+# vscode-insiders
+mkdir -p "${HOME}/.config/Code\ -\ Insiders/User"
+create_link "${ABS_PATH}/vscode-insiders/snippets" "${HOME}/.config/Code\ -\ Insiders/User/snippets"
+create_link "${ABS_PATH}/vscode-insiders/settings.json" "${HOME}/.config/Code\ -\ Insiders/User/settings.json"
+
 # vim
 create_link "${ABS_PATH}/vim/.vimrc" "${HOME}/.vimrc"
 
@@ -141,8 +151,8 @@ create_link "${ABS_PATH}/tmux/.tmux.conf" "${HOME}/.tmux.conf"
 
 # xorg
 if [[ "${NO_XORG}" != "true" ]]; then
-	create_link "${ABS_PATH}/xorg/.xinitrc" "${HOME}/.xinitrc"
-	create_link "${ABS_PATH}/xorg/.xprofile" "${HOME}/.xprofile"
+    create_link "${ABS_PATH}/xorg/.xinitrc" "${HOME}/.xinitrc"
+    create_link "${ABS_PATH}/xorg/.xprofile" "${HOME}/.xprofile"
 fi
 
 # vscode
@@ -152,18 +162,18 @@ create_link "${ABS_PATH}/vscode/User/vsicons.settings.json" "${HOME}/.config/Cod
 
 # Apply bash env to plasma session
 if [[ "${KDE_SESSION}" == "true" ]]; then
-	[[ -e "${HOME}/.config/plasma-workspace/env/" ]] || mkdir -p "${HOME}/.config/plasma-workspace/env/"
-	[[ -e "${HOME}/.config/plasma-workspace/env/xprofile.sh" ]] && rm -f "${HOME}/.config/plasma-workspace/env/xprofile.sh"
-
-	touch "${HOME}/.config/plasma-workspace/env/xprofile.sh"
-	chmod +x "${HOME}/.config/plasma-workspace/env/xprofile.sh"
-
-	# Generate xprofile file
-	echo '#!/usr/bin/env bash' >>"${HOME}/.config/plasma-workspace/env/xprofile.sh"
-	echo '# generated by dotfiles/setup.sh' >>"${HOME}/.config/plasma-workspace/env/xprofile.sh"
-	echo >>"${HOME}/.config/plasma-workspace/env/xprofile.sh"
-	echo 'source ~/.bashenv' >>"${HOME}/.config/plasma-workspace/env/xprofile.sh"
-	echo >>"${HOME}/.config/plasma-workspace/env/xprofile.sh"
+    [[ -e "${HOME}/.config/plasma-workspace/env/" ]] || mkdir -p "${HOME}/.config/plasma-workspace/env/"
+    [[ -e "${HOME}/.config/plasma-workspace/env/xprofile.sh" ]] && rm -f "${HOME}/.config/plasma-workspace/env/xprofile.sh"
+    
+    touch "${HOME}/.config/plasma-workspace/env/xprofile.sh"
+    chmod +x "${HOME}/.config/plasma-workspace/env/xprofile.sh"
+    
+    # Generate xprofile file
+    echo '#!/usr/bin/env bash' >>"${HOME}/.config/plasma-workspace/env/xprofile.sh"
+    echo '# generated by dotfiles/setup.sh' >>"${HOME}/.config/plasma-workspace/env/xprofile.sh"
+    echo >>"${HOME}/.config/plasma-workspace/env/xprofile.sh"
+    echo 'source ~/.bashenv' >>"${HOME}/.config/plasma-workspace/env/xprofile.sh"
+    echo >>"${HOME}/.config/plasma-workspace/env/xprofile.sh"
 fi
 
 trap : 0

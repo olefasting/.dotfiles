@@ -1,0 +1,19 @@
+{
+  "window.zoomLevel": 0,
+  "workbench.colorTheme": "Darktooth",
+  "workbench.iconTheme": "file-icons",
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.renderLineHighlight": "all",
+  "terminal.external.linuxExec": "konsole",
+  "files.useExperimentalFileWatcher": true,
+  "files.associations": {
+    ".*": "shellscript"
+  },
+  "[Makefile]": {
+    "editor.insertSpaces": false
+  },
+  "git.autofetch": false,
+  "gitlens.insiders": true,
+  "gitlens.outputLevel": "errors"
+}
