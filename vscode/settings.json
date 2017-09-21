@@ -5,6 +5,7 @@
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.renderLineHighlight": "all",
+  "editor.detectIndentation": false,
   "terminal.external.linuxExec": "konsole",
   "files.useExperimentalFileWatcher": true,
   "files.associations": {
@@ -14,6 +15,7 @@
     "editor.insertSpaces": false
   },
   "git.autofetch": false,
+  "git.enableSmartCommit": true,
   "gitlens.insiders": true,
   "gitlens.outputLevel": "errors"
 }

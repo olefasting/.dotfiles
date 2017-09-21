@@ -5,6 +5,7 @@
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.renderLineHighlight": "all",
+  "editor.detectIndentation": false,
   "terminal.external.linuxExec": "konsole",
   "files.useExperimentalFileWatcher": true,
   "files.associations": {
