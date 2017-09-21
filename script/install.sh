@@ -4,10 +4,14 @@ install_package() {
 	# Universal packages
 	if [[ "${package_name}" == "rust" ]]; then
         # choosenim (nim version manager)
-        if [[ ! -e "$(which choosenim)" ]]; then
+        if [[ ! -e "$(command -v which choosenim)" ]]; then
             curl https://nim-lang.org/choosenim/init.sh -sSf | sh
-            choosenim refresh
-            choosenim stable
+        	if [[ ! -e "$(command -v which choosenim)" ]]; then
+				echo "Could not install choosenim"
+			else
+            	choosenim refresh
+            	choosenim stable
+			fi
         fi
 	else
 		# Install non-standard or distro specific package

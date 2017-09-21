@@ -76,7 +76,7 @@ create_link() {
             cp -r "${2}" "${2}.old"
         fi
         
-        rm -f "${2}"
+        rm -rf "${2}"
     fi
     
     # Create link
@@ -133,16 +133,6 @@ create_link "${ABS_PATH}/bash/.bash_profile" "${HOME}/.bash_profile"
 create_link "${ABS_PATH}/bash/.bash_logout" "${HOME}/.bash_logout"
 source "${HOME}/.bash_profile"
 
-# vscode
-mkdir -p "${HOME}/.config/Code/User"
-create_link "${ABS_PATH}/vscode/snippets" "${HOME}/.config/Code/User/snippets"
-create_link "${ABS_PATH}/vscode/settings.json" "${HOME}/.config/Code/User/settings.json"
-
-# vscode-insiders
-mkdir -p "${HOME}/.config/Code\ -\ Insiders/User"
-create_link "${ABS_PATH}/vscode-insiders/snippets" "${HOME}/.config/Code\ -\ Insiders/User/snippets"
-create_link "${ABS_PATH}/vscode-insiders/settings.json" "${HOME}/.config/Code\ -\ Insiders/User/settings.json"
-
 # vim
 create_link "${ABS_PATH}/vim/.vimrc" "${HOME}/.vimrc"
 
@@ -154,6 +144,16 @@ if [[ "${NO_XORG}" != "true" ]]; then
     create_link "${ABS_PATH}/xorg/.xinitrc" "${HOME}/.xinitrc"
     create_link "${ABS_PATH}/xorg/.xprofile" "${HOME}/.xprofile"
 fi
+
+# vscode
+mkdir -p "${HOME}/.config/Code/User"
+create_link "${ABS_PATH}/vscode/snippets" "${HOME}/.config/Code/User/snippets"
+create_link "${ABS_PATH}/vscode/settings.json" "${HOME}/.config/Code/User/settings.json"
+
+# vscode-insiders
+mkdir -p "${HOME}/.config/Code - Insiders/User"
+create_link "${ABS_PATH}/vscode-insiders/snippets" "${HOME}/.config/Code - Insiders/User/snippets"
+create_link "${ABS_PATH}/vscode-insiders/settings.json" "${HOME}/.config/Code - Insiders/User/settings.json"
 
 # Apply bash env to plasma session
 if [[ "${KDE_SESSION}" == "true" ]]; then
