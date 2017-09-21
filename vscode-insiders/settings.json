@@ -14,6 +14,7 @@
     "editor.insertSpaces": false
   },
   "git.autofetch": false,
+  "git.enableSmartCommit": true,
   "gitlens.insiders": true,
   "gitlens.outputLevel": "errors"
 }
