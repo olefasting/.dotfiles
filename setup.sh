@@ -145,10 +145,6 @@ if [[ "${NO_XORG}" != "true" ]]; then
     create_link "${ABS_PATH}/xorg/.xprofile" "${HOME}/.xprofile"
 fi
 
-# JS stuff
-npm install -g prettier snazzy
-# npm install -g prettier-eslint
-
 # vscode
 mkdir -p "${HOME}/.config/Code/User"
 create_link "${ABS_PATH}/vscode/snippets" "${HOME}/.config/Code/User/snippets"
