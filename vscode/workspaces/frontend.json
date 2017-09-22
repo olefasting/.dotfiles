@@ -1,17 +1,10 @@
 {
-    "editor.tabSize": 4,
-    "editor.insertSpaces": true,
-    "editor.wordWrapColumn": 120,
-    "editor.wordWrap": "bounded",
-    "[json]": {
-        "editor.tabSize": 2
-    },
-    "[html]": {
-        "editor.tabSize": 2,
-        "editor.wordWrapColumn": 200,
-        "editor.wordWrap": "on"
-    },
-    "[java]": {
-        "editor.tabSize": 4
-    }
+  "editor.tabSize": 4,
+  "editor.insertSpaces": true,
+  "[json]": {
+    "editor.tabSize": 2
+  },
+  "[html]": {
+    "editor.tabSize": 2
+  }
 }
