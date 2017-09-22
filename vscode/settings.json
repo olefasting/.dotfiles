@@ -1,11 +1,16 @@
 {
-  "window.zoomLevel": 0,
-  "workbench.colorTheme": "Darktooth",
-  "workbench.iconTheme": "file-icons",
+  "editor.tabSize": 4,
+  "editor.wordWrapColumn": 120,
+  "editor.wordWrap": "bounded",
+  "editor.rulers": [120],
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.renderLineHighlight": "all",
   "editor.detectIndentation": false,
+  "editor.autoClosingBrackets": false,
+  "window.zoomLevel": 0,
+  "workbench.colorTheme": "Darktooth",
+  "workbench.iconTheme": "file-icons",
   "terminal.external.linuxExec": "konsole",
   "files.useExperimentalFileWatcher": true,
   "files.associations": {
@@ -15,7 +20,5 @@
     "editor.insertSpaces": false
   },
   "git.autofetch": false,
-  "git.enableSmartCommit": true,
-  "gitlens.insiders": true,
-  "gitlens.outputLevel": "errors"
+  "git.enableSmartCommit": true
 }

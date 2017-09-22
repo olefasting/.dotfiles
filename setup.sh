@@ -152,8 +152,8 @@ create_link "${ABS_PATH}/vscode/settings.json" "${HOME}/.config/Code/User/settin
 
 # vscode-insiders
 mkdir -p "${HOME}/.config/Code - Insiders/User"
-create_link "${ABS_PATH}/vscode-insiders/snippets" "${HOME}/.config/Code - Insiders/User/snippets"
-create_link "${ABS_PATH}/vscode-insiders/settings.json" "${HOME}/.config/Code - Insiders/User/settings.json"
+create_link "${ABS_PATH}/vscode/snippets" "${HOME}/.config/Code - Insiders/User/snippets"
+create_link "${ABS_PATH}/vscode/settings.json" "${HOME}/.config/Code - Insiders/User/settings.json"
 
 # Apply bash env to plasma session
 if [[ "${KDE_SESSION}" == "true" ]]; then
