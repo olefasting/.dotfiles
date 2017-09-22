@@ -1,9 +1,9 @@
 {
-  "editor.tabSize": 4,
+  "editor.tabSize": 2,
   "editor.wordWrapColumn": 120,
   "editor.wordWrap": "bounded",
-  "editor.rulers": [120],
-  "editor.formatOnPaste": true,
+  "editor.rulers": [120, 200],
+  "editor.formatOnPaste": false,
   "editor.formatOnSave": true,
   "editor.renderLineHighlight": "all",
   "editor.detectIndentation": false,
@@ -16,8 +16,9 @@
   "files.associations": {
     ".*": "shellscript"
   },
-  "[Makefile]": {
-    "editor.insertSpaces": false
+  "[html]": {
+    "editor.wordWrapColumn": 200,
+    "editor.wordWrap": "on"
   },
   "git.autofetch": false,
   "git.enableSmartCommit": true

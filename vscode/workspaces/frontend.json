@@ -1,32 +1,25 @@
 {
-  "editor.formatOnSave": true,
-  "editor.tabSize": 4,
-  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
   "editor.wordWrapColumn": 120,
   "editor.wordWrap": "bounded",
-  "editor.rulers": [120],
-  "java.configuration.updateBuildConfiguration": "interactive",
-  "java.home": "/usr/lib/jvm/default/",
-  "java.referencesCodeLens.enabled": true,
-  "java.signatureHelp.enabled": true,
-  "java.implementationsCodeLens.enabled": true,
-  "requireModuleSupport.modulePath": "src/main/webapp",
-  "prettier.tabWidth": 4,
-  "prettier.printWidth": 120,
-  "prettier.singleQuote": true,
-  "prettier.useTabs": false,
-  "prettier.trailingComma": "es5",
-  "beautify.language": {
-    "html": ["htm", "html"]
+  "editor.rulers": [120, 200],
+  "editor.formatOnPaste": false,
+  "editor.formatOnSave": true,
+  "editor.renderLineHighlight": "all",
+  "editor.detectIndentation": false,
+  "editor.autoClosingBrackets": false,
+  "window.zoomLevel": 0,
+  "workbench.colorTheme": "Darktooth",
+  "workbench.iconTheme": "file-icons",
+  "terminal.external.linuxExec": "konsole",
+  "files.useExperimentalFileWatcher": true,
+  "files.associations": {
+    ".*": "shellscript"
   },
-  "gitlens.insiders": true,
-  "gitlens.outputLevel": "errors",
-  "html.format.enable": true,
-  "html.format.maxPreserveNewLines": 1,
-  "html.format.wrapLineLength": 120,
-  "html.format.indentHandlebars": true,
-  "html.format.wrapAttributes": "force-aligned",
-  "html.suggest.html5": true,
-  "html.suggest.ionic": false,
-  "html.suggest.angular1": false
+  "[html]": {
+    "editor.wordWrapColumn": 200,
+    "editor.wordWrap": "on"
+  },
+  "git.autofetch": false,
+  "git.enableSmartCommit": true
 }
