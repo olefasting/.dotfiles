@@ -1,5 +1,5 @@
 {
-  "editor.tabSize": 2,
+  "editor.tabSize": 4,
   "editor.wordWrapColumn": 120,
   "editor.wordWrap": "bounded",
   "editor.rulers": [120, 200],
@@ -7,19 +7,22 @@
   "editor.formatOnSave": true,
   "editor.renderLineHighlight": "all",
   "editor.detectIndentation": false,
-  "editor.autoClosingBrackets": false,
+  "editor.autoClosingBrackets": true,
   "window.zoomLevel": 0,
   "workbench.colorTheme": "Darktooth",
   "workbench.iconTheme": "file-icons",
   "terminal.external.linuxExec": "konsole",
   "files.useExperimentalFileWatcher": true,
   "files.associations": {
-    ".*": "shellscript"
-  },
-  "[html]": {
-    "editor.wordWrapColumn": 200,
-    "editor.wordWrap": "on"
+    "*code-workspace": "json"
   },
   "git.autofetch": false,
-  "git.enableSmartCommit": true
+  "git.enableSmartCommit": true,
+  "problems.autoReveal": false,
+  "html.autoClosingTags": false,
+  "[html]": {
+    "editor.tabSize": 2,
+    "editor.wordWrapColumn": 200,
+    "editor.wordWrap": "on"
+  }
 }
