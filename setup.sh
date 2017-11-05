@@ -150,14 +150,6 @@ mkdir -p "${HOME}/.config/Code/User"
 create_link "${ABS_PATH}/vscode/snippets" "${HOME}/.config/Code/User/snippets"
 create_link "${ABS_PATH}/vscode/settings.json" "${HOME}/.config/Code/User/settings.json"
 
-# vscode-insiders
-mkdir -p "${HOME}/.config/Code - Insiders/User"
-create_link "${ABS_PATH}/vscode/snippets" "${HOME}/.config/Code - Insiders/User/snippets"
-create_link "${ABS_PATH}/vscode/settings.json" "${HOME}/.config/Code - Insiders/User/settings.json"
-
-# Apply bash env to plasma session
-if [[ "${KDE_SESSION}" == "true" ]]; then
-    [[ -e "${HOME}/.config/plasma-workspace/env/" ]] || mkdir -p "${HOME}/.config/plasma-workspace/env/"
     [[ -e "${HOME}/.config/plasma-workspace/env/xprofile.sh" ]] && rm -f "${HOME}/.config/plasma-workspace/env/xprofile.sh"
     
     touch "${HOME}/.config/plasma-workspace/env/xprofile.sh"

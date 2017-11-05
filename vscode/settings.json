@@ -10,7 +10,7 @@
   "editor.detectIndentation": false,
   "editor.autoClosingBrackets": true,
   "editor.renderWhitespace": "all",
-  "window.zoomLevel": 0,
+  "window.zoomLevel": 1,
   "workbench.colorTheme": "Darktooth",
   "workbench.iconTheme": "file-icons",
   "files.insertFinalNewline": true,
