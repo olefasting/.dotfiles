@@ -100,8 +100,8 @@ parse_flags
 create_dir "${ABS_PATH}/backup"
 create_dir "${ABS_PATH}/build"
 
+
 if [[ "${INSTALL_DEPS}" == "true" ]]; then
-    # Install deps
     echo "
     Installing dependencies:"
     echo "${SPACER}"
@@ -146,9 +146,11 @@ if [[ "${NO_XORG}" != "true" ]]; then
 fi
 
 # vscode
-mkdir -p "${HOME}/.config/Code/User"
-create_link "${ABS_PATH}/vscode/snippets" "${HOME}/.config/Code/User/snippets"
-create_link "${ABS_PATH}/vscode/settings.json" "${HOME}/.config/Code/User/settings.json"
+if [[ "${NO_XORG}" != "true" ]]; then
+    mkdir -p "${HOME}/.config/Code/User"
+    create_link "${ABS_PATH}/vscode/snippets" "${HOME}/.config/Code/User/snippets"
+    create_link "${ABS_PATH}/vscode/settings.json" 
+"${HOME}/.config/Code/User/settings.json"
 
     [[ -e "${HOME}/.config/plasma-workspace/env/xprofile.sh" ]] && rm -f "${HOME}/.config/plasma-workspace/env/xprofile.sh"
     
