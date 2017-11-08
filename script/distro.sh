@@ -1,45 +1,45 @@
 #!/usr/bin/env bash
 
-DISTRO=""
+distro=""
 
-DISTRO_ARCH="arch"
-DISTRO_UBUNTU="ubuntu"
-DISTRO_DEBIAN="debian"
+distro_arch="arch"
+distro_ubuntu="ubuntu"
+distro_debian="debian"
+distro_unknown="unknown"
 
-DISTRO_LIST=("${DISTRO_ARCH}" "${DISTRO_UBUNTU}" "${DISTRO_DEBIAN}")
+distro_LIST=("${distro_arch}" "${distro_ubuntu}" "${distro_debian}")
 
-DISTRO_UNKNOWN='unknown'
 
 determine_distro() {
-    if [[ ! -z "${DISTRO}" ]]; then
+    if [[ ! -z "${distro}" ]]; then
         local i = 0
-        local cnt = "${#DISTRO_LIST[@]}"
+        local cnt = "${#distro_LIST[@]}"
 
         while [[ "${i}" < "${cnt}" ]]; do
-            if [[ "${DISTRO}" == "${DISTRO_LIST[${i}]}" ]]; then
+            if [[ "${distro}" == "${distro_LIST[${i}]}" ]]; then
                 # Manually set distro found
-                echo `"Environment variable 'DISTRO' was set, and the specified distro '${DISTRO}' has been selected."`
+                echo `"Environment variable 'distro' was set, and the specified distro '${distro}' has been selected."`
 
                 # Break loop by setting i to cnt
                 let "i=${cnt}"
             elif [[ "${i}" == "${cnt}-1" ]]; then
                 # Last item and no match was found.
-                echo `"Environment variable 'DISTRO' was set, but the specified distro '${DISTRO}' is not supported.
+                echo `"Environment variable 'distro' was set, but the specified distro '${distro}' is not supported.
                 Trying auto detect in stead."`
                 
                 # Set to blank and try next step.
-                DISTRO=""
+                distro=""
             else
                 let "i+=1"
             fi
         done
     fi
 
-    if [[ -z "${DISTRO}" ]]; then
+    if [[ -z "${distro}" ]]; then
         if [ -f "/etc/os-release" ]; then
-            DISTRO="$(get_distro_name)"
+            distro="$(get_distro_name)"
         else
-            DISTRO="${DISTRO_UNKNOWN}"
+            distro="${distro_unknown}"
             
         fi
     fi
@@ -52,9 +52,9 @@ get_distro_name() (
         if [[ ! -z "${ID}" ]]; then
             echo "${ID}"
         else
-            echo "${DISTRO_UNKNOWN}"
+            echo "${distro_unknown}"
         fi
     else
-        echo "${DISTRO_UNKNOWN}"
+        echo "${distro_unknown}"
     fi
 )

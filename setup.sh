@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-SPACER='----------------------------------------------------------------'
+spacer='----------------------------------------------------------------'
 
 # Error handling
 # http://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
@@ -17,28 +17,19 @@ if [[ "${EUID}" == "0" ]]; then
 fi
 
 # Determine absolute path
-if [[ ! -d "${ABS_PATH}" ]]; then
-    ABS_PATH="${BASH_SOURCE[0]}"
+if [[ ! -d "${abs_path}" ]]; then
+    abs_path="${BASH_SOURCE[0]}"
     
-    if [ -h "${ABS_PATH}" ]; then
-        while [ -h "${ABS_PATH}" ]; do
-            ABS_PATH=$(readlink "${ABS_PATH}")
+    if [ -h "${abs_path}" ]; then
+        while [ -h "${abs_path}" ]; do
+            abs_path=$(readlink "${abs_path}")
         done
     fi
     
     pushd . >/dev/null
-    cd $(dirname ${ABS_PATH}) >/dev/null
-    ABS_PATH=$(pwd)
+    cd $(dirname ${abs_path}) >/dev/null
+    abs_path=$(pwd)
     popd >/dev/null
-fi
-
-# Local config
-[[ -d "${ABS_PATH}" ]] && LOCAL_CONFIG="${ABS_PATH}/.local"
-if [[ -f "${LOCAL_CONFIG}" ]]; then
-    source "${LOCAL_CONFIG}"
-else
-    # Default config
-    INSTALL_DEPS="true"
 fi
 
 # Source scripts
@@ -90,21 +81,21 @@ determine_distro
 
 # Start
 echo "
-Starting setup for '${DISTRO}' in '${HOME}'"
-echo "${SPACER}"
+Starting setup for '${distro}' in '${HOME}'"
+echo "${spacer}"
 
 # Flags
 parse_flags
 
 # Create needed folders
-create_dir "${ABS_PATH}/backup"
-create_dir "${ABS_PATH}/build"
+create_dir "${abs_path}/backup"
+create_dir "${abs_path}/build"
 
 
-if [[ "${INSTALL_DEPS}" == "true" ]]; then
+if [[ "${NO_DEPENDENCIES}" != "true" ]]; then
     echo "
     Installing dependencies:"
-    echo "${SPACER}"
+    echo "${spacer}"
     
     # Refresh repos
     install_package sync
@@ -121,39 +112,37 @@ Done installing dependencies
     "
 fi
 
-[[ "${INSTALL_DEPS}" == "true" ]] && echo INSTALL_DEPS="false" >"${LOCAL_CONFIG}"
-
 # Create bash profile
 echo '
 Linking files'
-echo "${SPACER}"
-create_link "${ABS_PATH}/bash/.bashrc" "${HOME}/.bashrc"
-create_link "${ABS_PATH}/bash/.bashenv" "${HOME}/.bashenv"
-create_link "${ABS_PATH}/bash/.bash_profile" "${HOME}/.bash_profile"
-create_link "${ABS_PATH}/bash/.bash_logout" "${HOME}/.bash_logout"
+echo "${spacer}"
+create_link "${abs_path}/bash/.bash_profile" "${HOME}/.bash_profile"
+create_link "${abs_path}/bash/.bashrc" "${HOME}/.bashrc"
+create_link "${abs_path}/bash/.bash_logout" "${HOME}/.bash_logout"
 source "${HOME}/.bash_profile"
 
 # vim
-create_link "${ABS_PATH}/vim/.vimrc" "${HOME}/.vimrc"
+create_link "${abs_path}/vim/.vimrc" "${HOME}/.vimrc"
 
 # tmux
-create_link "${ABS_PATH}/tmux/.tmux.conf" "${HOME}/.tmux.conf"
+create_link "${abs_path}/tmux/.tmux.conf" "${HOME}/.tmux.conf"
 
-# xorg
 if [[ "${NO_XORG}" != "true" ]]; then
-    create_link "${ABS_PATH}/xorg/.xinitrc" "${HOME}/.xinitrc"
-    create_link "${ABS_PATH}/xorg/.xprofile" "${HOME}/.xprofile"
-fi
+    # xorg
+    create_link "${abs_path}/xorg/.xinitrc" "${HOME}/.xinitrc"
+    create_link "${abs_path}/xorg/.xprofile" "${HOME}/.xprofile"
 
-# vscode
-if [[ "${NO_XORG}" != "true" ]]; then
+    # vscode
     mkdir -p "${HOME}/.config/Code/User"
-    create_link "${ABS_PATH}/vscode/snippets" "${HOME}/.config/Code/User/snippets"
-    create_link "${ABS_PATH}/vscode/settings.json" 
-"${HOME}/.config/Code/User/settings.json"
+    create_link "${abs_path}/vscode/snippets" "${HOME}/.config/Code/User/snippets"
+    create_link "${abs_path}/vscode/settings.json" "${HOME}/.config/Code/User/settings.json"
 
-    [[ -e "${HOME}/.config/plasma-workspace/env/xprofile.sh" ]] && rm -f "${HOME}/.config/plasma-workspace/env/xprofile.sh"
-    
+    # vscode insiders
+    mkdir -p "${HOME}/.config/Code - Insiders/User"
+    create_link "${abs_path}/vscode/snippets" "${HOME}/.config/Code - Insiders/User/snippets"
+    create_link "${abs_path}/vscode/settings.json" "${HOME}/.config/Code - Insiders/User/settings.json"
+
+    [[ -e "${HOME}/.config/plasma-workspace/env/xprofile.sh" ]] && rm -f "${HOME}/.config/plasma-workspace/env/xprofile.sh"    
     touch "${HOME}/.config/plasma-workspace/env/xprofile.sh"
     chmod +x "${HOME}/.config/plasma-workspace/env/xprofile.sh"
     

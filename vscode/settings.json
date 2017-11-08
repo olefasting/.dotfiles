@@ -3,14 +3,16 @@
   "editor.insertSpaces": true,
   "editor.wordWrapColumn": 120,
   "editor.wordWrap": "bounded",
-  "editor.rulers": [ 120 ],
+  "editor.rulers": [
+      120
+  ],
   "editor.formatOnPaste": false,
   "editor.formatOnSave": true,
   "editor.renderLineHighlight": "all",
   "editor.detectIndentation": false,
   "editor.autoClosingBrackets": true,
   "editor.renderWhitespace": "all",
-  "window.zoomLevel": 1,
+  "window.zoomLevel": 0,
   "workbench.colorTheme": "Darktooth",
   "workbench.iconTheme": "file-icons",
   "files.insertFinalNewline": true,
@@ -21,9 +23,9 @@
   "html.format.wrapLineLength": 120,
   "html.format.preserveNewLines": true,
   "html.format.maxPreserveNewLines": 1,
-  "html.autoClosingTags": false,
   "html.format.indentHandlebars": true,
-  "html.format.wrapAttributes": "force-expand-multiline",
+  "html.format.wrapAttributes": "auto",
+  "html.autoClosingTags": false,
   "html.suggest.html5": true,
   "html.suggest.ionic": false,
   "html.suggest.angular1": false,
@@ -36,15 +38,18 @@
   "prettier.trailingComma": "es5",
   "prettier.singleQuote": true,
   "prettier.alignObjectProperties": true,
-  "prettier.jsonEnable": [],
-  "prettier.cssEnable": [],
+  "prettier.flattenTernaries": true,
+  "prettier.arrayExpand": true,
   "[css]": {
-    "editor.tabSize": 2
+      "editor.tabSize": 2
   },
   "[json]": {
-    "editor.tabSize": 2,
-    "editor.quickSuggestions": {
-      "strings": true
-    }
-  }
+      "editor.tabSize": 2,
+      "editor.quickSuggestions": {
+          "strings": true
+      }
+  },
+  "extensions.ignoreRecommendations": false,
+  "explorer.confirmDragAndDrop": false,
+  "workbench.startupEditor": "welcomePage"
 }

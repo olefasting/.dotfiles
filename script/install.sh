@@ -15,15 +15,15 @@ install_package() {
         fi
 	else
 		# Install non-standard or distro specific package
-		if [[ "${DISTRO}" == "${DISTRO_ARCH}" ]]; then
+		if [[ "${distro}" == "${distro_arch}" ]]; then
 			if [[ "${package_name}" == "sync" ]]; then
 				sudo pacman -Syy --quiet
 			elif [[ "${package_name}" == "yaourt" ]]; then
-				source "${ABS_PATH}/arch/yaourt.sh"
+				source "${abs_path}/arch/yaourt.sh"
 			else
 				sudo pacman -S --needed --noconfirm --quiet "${package_name}"
 			fi
-		elif [[ "${DISTRO}" == "${DISTRO_UBUNTU}" ]] || [[ "${DISTRO}" == "${DISTRO_DEBIAN}" ]]; then
+		elif [[ "${distro}" == "${distro_ubuntu}" ]] || [[ "${distro}" == "${distro_DEBIAN}" ]]; then
 			if [[ "${package_name}" == "sync" ]]; then
 				sudo apt-get -qq update
 			else

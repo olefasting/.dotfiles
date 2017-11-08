@@ -4,15 +4,15 @@ parse_flags() {
 	local flags=()
 
 	# Defaults
-	[[ -z "${INSTALL_DEPS}" ]] && INSTALL_DEPS="true"
+	[[ -z "${NO_DEPENDENCIES}" ]] && NO_DEPENDENCIES="false"
 	[[ -z "${SERVER}" ]] && SERVER="false"
 	[[ -z "${NO_XORG}" ]] && NO_XORG="false"
 
 	# Parse
-	flags=("${flags[@]}" "INSTALL_DEPS:     Dependencies will be (re)installed if true          [${INSTALL_DEPS}]")
-	flags=("${flags[@]}" "SERVER:           Only server relevent packages will be installed     [${SERVER}]")
+	flags=("${flags[@]}" "NO_DEPENDENCIES:     Dependencies will not be (re)installed if true      [${NO_DEPENDENCIES}]")
+	flags=("${flags[@]}" "SERVER:              Only server relevent packages will be installed     [${SERVER}]")
 	[[ "${SERVER}" == "true" ]] && NO_XORG="true"
-	flags=("${flags[@]}" "NO_XORG:          Xorg will not be installed                          [${NO_XORG}]")
+	flags=("${flags[@]}" "NO_XORG:             Xorg will not be installed                          [${NO_XORG}]")
 	if [[ "${#flags[@]}" > "0" ]]; then
 		local i=0
 		local cnt="${#flags[@]}"

@@ -1,1 +1,1 @@
-[[ -e ~/.bashenv ]] && . ~/.bashenv
+[[ -e ~/.bashrc ]] && . ~/.bashrc
