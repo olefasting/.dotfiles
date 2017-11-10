@@ -30,6 +30,10 @@ if [[ -f "/etc/arch-release" ]]; then
     # Aliases
     alias yao='yaourt'
     alias pac='sudo pacman'
+    
+    # Java
+    export JAVA_HOME="/usr/lib/jvm/default-runtime"
+    export JDK_HOME="${JAVA_HOME}"
 fi
 
 # gnupg home
