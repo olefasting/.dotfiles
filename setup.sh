@@ -121,6 +121,9 @@ create_link "${abs_path}/bash/.bashrc" "${HOME}/.bashrc"
 create_link "${abs_path}/bash/.bash_logout" "${HOME}/.bash_logout"
 source "${HOME}/.bash_profile"
 
+# julia
+create_link "${ABS_DIR}/julia/.juliarc.jl" "${HOME}/.juliarc.jl"
+
 # vim
 create_link "${abs_path}/vim/.vimrc" "${HOME}/.vimrc"
 

@@ -4,7 +4,7 @@
   "editor.wordWrapColumn": 120,
   "editor.wordWrap": "bounded",
   "editor.rulers": [
-      120
+    120
   ],
   "editor.formatOnPaste": false,
   "editor.formatOnSave": true,
@@ -14,7 +14,7 @@
   "editor.renderWhitespace": "all",
   "window.zoomLevel": 0,
   "workbench.colorTheme": "Darktooth",
-  "workbench.iconTheme": "file-icons",
+  "workbench.iconTheme": "vscode-icons",
   "files.insertFinalNewline": true,
   "files.useExperimentalFileWatcher": true,
   "problems.autoReveal": false,
@@ -41,15 +41,16 @@
   "prettier.flattenTernaries": true,
   "prettier.arrayExpand": true,
   "[css]": {
-      "editor.tabSize": 2
+    "editor.tabSize": 2
   },
   "[json]": {
-      "editor.tabSize": 2,
-      "editor.quickSuggestions": {
-          "strings": true
-      }
+    "editor.tabSize": 2,
+    "editor.quickSuggestions": {
+      "strings": true
+    }
   },
   "extensions.ignoreRecommendations": false,
   "explorer.confirmDragAndDrop": false,
-  "workbench.startupEditor": "welcomePage"
+  "workbench.startupEditor": "welcomePage",
+  "julia.executablePath": "/bin/julia"
 }
