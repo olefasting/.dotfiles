@@ -55,19 +55,21 @@ create_link() {
 
 	# Check that dotfile exists
 	if [[ ! -e "${1}" ]]; then
-		echo "Error creating link: The specified file or directory does not exist"
+        ls -la "${1}"
+		echo "Error creating link: The specified file or directory '${1}' does not exist"
 		return 1
 	fi
 
 	# Check for existing dotfile
 	if [[ -e "${2}" ]]; then
 		if [[ ! -L "${2}" ]]; then
-			# Backup and delete
-			echo "File or directory '${2}' already exists. Backing it up as '${2}.old' before overwrite"
-			cp -r "${2}" "${2}.old"
+            # Backup and delete
+            echo "File or directory '${2}' already exists.
+    Backing it up as '${2}.old' before overwrite"
+            mv "${2}" "${2}.old"
+        else
+            rm -f "${2}"
 		fi
-
-		rm -rf "${2}"
 	fi
 
 	# Create link

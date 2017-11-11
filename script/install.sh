@@ -19,7 +19,7 @@ install_package() {
 			if [[ "${package_name}" == "sync" ]]; then
 				sudo pacman -Syy --quiet
 			elif [[ "${package_name}" == "yaourt" ]]; then
-				source "${abs_path}/arch/yaourt.sh"
+				source "${abs_path}/script/arch/yaourt.sh"
 			else
 				sudo pacman -S --needed --noconfirm --quiet "${package_name}"
 			fi

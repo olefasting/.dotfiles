@@ -1,3 +1,7 @@
 backup
 build
 .local
+
+.DS_Store
+.directory
+thumbs.db

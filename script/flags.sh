@@ -4,7 +4,7 @@ parse_flags() {
 	local flags=()
 
 	# Defaults
-	[[ -z "${NO_DEPENDENCIES}" ]] && NO_DEPENDENCIES="false"
+	[[ -z "${NO_DEPENDENCIES}" ]] && NO_DEPENDENCIES="true"
 	[[ -z "${SERVER}" ]] && SERVER="false"
 	[[ -z "${NO_XORG}" ]] && NO_XORG="false"
 
