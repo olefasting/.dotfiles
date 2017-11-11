@@ -70,15 +70,18 @@ if [[ ! -d "${NVM_DIR}" ]]; then
 			mv "${backup_name}" "${new_backup_name}"
 			backup_name="${new_backup_name}"
 		done
-
 		mkdir -p "${NVM_DIR}"
 	fi
 
 	if [[ -d "${NVM_DIR}" ]]; then
 		if [[ -e $(which curl) ]]; then
-			curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
+			curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
+			clear
 		elif [[ -e $(which wget) ]]; then
 			wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
+			clear
+		else
+			echo "Unable to download nvm. Install 'curl' or 'wget' to the system PATH to enable nvm"
 		fi
 	else
 		echo "Unable to create NVM_DIR '${NVM_DIR}'. Please resolve this and reopen the console"
@@ -153,3 +156,4 @@ asdf=$(
 
 # Update path variable
 export PATH="${PATH}:/opt/vscode/bin:${HOME}/.local/bin:${nim_dir}/sbin:${asdf}/bin:${asdf}/shims:${GOBIN}"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
