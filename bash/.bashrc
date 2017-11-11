@@ -75,9 +75,9 @@ if [[ ! -d "${NVM_DIR}" ]]; then
 	fi
 
 	if [[ -d "${NVM_DIR}" ]]; then
-		if [[ -f $(which curl) ]]; then
+		if [[ -e $(which curl) ]]; then
 			curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
-		elif [[ -f $(which wget) ]]; then
+		elif [[ -e $(which wget) ]]; then
 			wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
 		fi
 	else
