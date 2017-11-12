@@ -62,7 +62,7 @@ create_link() {
 
 	# Check for existing dotfile
 	if [[ -e "${2}" ]]; then
-		if [[ ! -L "${2}" ]]; then
+		if [[ -L "${2}" ]]; then
             # Backup and delete
             echo "File or directory '${2}' already exists.
     Backing it up as '${2}.old' before overwrite"

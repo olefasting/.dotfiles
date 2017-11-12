@@ -3,9 +3,7 @@
     "editor.insertSpaces": true,
     "editor.wordWrapColumn": 120,
     "editor.wordWrap": "bounded",
-    "editor.rulers": [
-        120
-    ],
+    "editor.rulers": [120],
     "editor.formatOnPaste": false,
     "editor.formatOnSave": true,
     "editor.renderLineHighlight": "all",
@@ -40,6 +38,14 @@
     "prettier.alignObjectProperties": true,
     "prettier.flattenTernaries": true,
     "prettier.arrayExpand": true,
+    "yaml.format.enable": true,
+    "yaml.schemas": {},
+    "javascript.referencesCodeLens.enabled": true,
+    "typescript.tsserver.log": "verbose",
+    "typescript.tsserver.trace": "verbose",
+    "typescript.useCodeSnippetsOnMethodSuggest": true,
+    "typescriptHero.verbosity": "debug",
+    "typescriptHero.resolver.organizeOnSave": true,
     "[css]": {
         "editor.tabSize": 2
     },
@@ -49,15 +55,33 @@
             "strings": true
         }
     },
+    "[julia]": {
+        "licenser.useSingleLineStyle": true
+    },
+    "licenser.author": "Ole A. Sjo Fasting <oasf@polygo.no>",
+    "licenser.license": "MIT",
     "extensions.ignoreRecommendations": false,
     "explorer.confirmDragAndDrop": false,
-    "workbench.startupEditor": "welcomePage",
+    "workbench.startupEditor": "newUntitledFile",
     "julia.executablePath": "/bin/julia",
     "gitlens.insiders": true,
     "gitlens.debug": true,
     "gitlens.outputLevel": "errors",
-    "yaml.format.enable": true,
-    "yaml.schemas": {},
-    "licenser.author": "Ole A. Sjo Fasting <oasf@polygo.no>",
-    "licenser.license": "MIT"
+    "vsicons.dontShowNewVersionMessage": true,
+    "jupyter.languages": [
+        {
+            "languageId": "python",
+            "startupCode": ["%matplotlib inline"],
+            "cellIdentificationPattern": "^(#\\s*%%|#\\s*\\<codecell\\>|#\\s*In\\[\\d*?\\]|#\\s*In\\[ \\])(.*)"
+        },
+        {
+            "languageId": "javascript",
+            "cellIdentificationPattern":
+                "^(\\/\\/ %%|\\/\\/%%|\\/\\/ \\<codecell\\>|\\/\\/ In\\[\\d*?\\]|\\/\\/ In\\[ \\])(.*)"
+        },
+        {
+            "languageId": "julia",
+            "cellIdentificationPattern": "^(#\\s*%%|#\\s*\\<codecell\\>|#\\s*In\\[\\d*?\\]|#\\s*In\\[ \\])(.*)"
+        }
+    ]
 }
