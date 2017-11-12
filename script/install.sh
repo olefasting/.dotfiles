@@ -1,18 +1,18 @@
-install_package() {
+package() {
 	local package_name="${1}"
 
 	# Universal packages
 	if [[ "${package_name}" == "rust" ]]; then
-        # choosenim (nim version manager)
-        if [[ ! -e "$(command -v which choosenim)" ]]; then
-            curl https://nim-lang.org/choosenim/init.sh -sSf | sh
-        	if [[ ! -e "$(command -v which choosenim)" ]]; then
+		# choosenim (nim version manager)
+		if [[ ! -e "$(command -v which choosenim)" ]]; then
+			curl https://nim-lang.org/choosenim/init.sh -sSf | sh
+			if [[ ! -e "$(command -v which choosenim)" ]]; then
 				echo "Could not install choosenim"
 			else
-            	choosenim refresh
-            	choosenim stable
+				choosenim refresh
+				choosenim stable
 			fi
-        fi
+		fi
 	else
 		# Install non-standard or distro specific package
 		if [[ "${distro}" == "${distro_arch}" ]]; then
