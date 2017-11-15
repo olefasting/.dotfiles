@@ -99,15 +99,12 @@ refmt_target=$(which refmt)
 refmt_name=/usr/local/bin/refmt
 if [[ -e "${refmt_target}" ]]; then
     if [[ ! -e "${refmt_name}" ]] || [[ "${refmt_target}" != $(readlink "${refmt_name}") ]]; then
-        refmt_delete_cmd="rm -rf ${refmt_name}"
-        refmt_link_cmd="ln -s ${refmt_target} ${refmt_name}"
-        if [[ "${EUID}" != "0" ]]; then
-            echo "Creating link from refmt binary to '${refmt_name}' using sudo. Please authenticate."
-            refmt_delete_cmd="sudo ${refmt_delete_cmd}"
-            refmt_link_cmd="sudo ${refmt_link_cmd}"
+        if [[ "${EUID}" == "0" ]]; then
+            ln -s "${refmt_target}" "${refmt_name}"
+        else
+            echo "Linking refmt requires the use of sudo and was canceled. Use the command 'install-refmt' in stead"
+            alias install-refmt="sudo ln -s ${refmt_target} ${refmt_name} && [[ -e ${refmt_name} ]] && unalias install-refmt"
         fi
-        [[ -d "${refmt_name}" ]] && $(${refmt_delete_cmd})
-        $(${refmt_link_cmd})
     fi
 fi
 
@@ -118,7 +115,7 @@ export ANDROID_TOOLCHAINS=${ANDROID_NDK}/toolchains
 # ssh gui dialogue
 export SSH_ASKPASS="/usr/bin/ksshaskpass"
 
-_asdf() {
+function _asdf {
     local cur="${COMP_WORDS[COMP_CWORD]}"
     local cmd="${COMP_WORDS[1]}"
     local prev="${COMP_WORDS[COMP_CWORD - 1]}"
