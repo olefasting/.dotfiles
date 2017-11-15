@@ -4,32 +4,32 @@ spacer='----------------------------------------------------------------'
 # Error handling
 # http://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
 abort() {
-	echo "ERROR: Setup was interrupted"
-	exit 1
+    echo "ERROR: Setup was interrupted"
+    exit 1
 }
 
 trap 'abort' 0
 
 # Check that user is not root
 if [[ "${EUID}" == "0" ]]; then
-	echo "Please call this script as a regular user."
-	exit 1
+    echo "Please call this script as a regular user."
+    exit 1
 fi
 
 # Determine absolute path
 if [[ ! -d "${abs_path}" ]]; then
-	abs_path="${BASH_SOURCE[0]}"
-
-	if [ -h "${abs_path}" ]; then
-		while [ -h "${abs_path}" ]; do
-			abs_path=$(readlink "${abs_path}")
-		done
-	fi
-
-	pushd . >/dev/null
-	cd $(dirname ${abs_path}) >/dev/null
-	abs_path=$(pwd)
-	popd >/dev/null
+    abs_path="${BASH_SOURCE[0]}"
+    
+    if [ -h "${abs_path}" ]; then
+        while [ -h "${abs_path}" ]; do
+            abs_path=$(readlink "${abs_path}")
+        done
+    fi
+    
+    pushd . >/dev/null
+    cd $(dirname "${abs_path}") >/dev/null
+    abs_path=$(pwd)
+    popd >/dev/null
 fi
 
 # Source scripts
@@ -40,36 +40,36 @@ source script/install.sh
 
 # This function installs a dotfile. It needs two parameters; the path to the dotfile to be
 # installed, and the link name to use when installing.
-link() {
-	local source="${1}"
-	local target="${2}"
-
-	echo "- '${source}' -> '${target}'"
-
-	# Check for required params
-	[[ -z "${source}" ]] && echo "Error linking: Source path is empty" && return 1
-	[[ -z "${target}" ]] && echo "Error linking: Target path is empty" && return 1
-
-	# Check that dotfile exists
-	if [[ ! -e "${source}" ]]; then
-		ls -la "${source}"
-		echo "Error creating link: The specified file or directory '${source}' does not exist"
-		return 1
-	fi
-
-	# Check for existing item at ${target}
-	if [[ -w "${target}" ]]; then
-		if [[ -f "${target}" ]] || [[ -d "${target}" ]]; then
-			# File or folder
-			mv $("${target}" "${target}.old")
-		else
-			# Link
-			rm -f "${target}"
-		fi
-		# Create link
-		ln -s "${source}" "${target}"
-	fi
-	return 0
+link_to() {
+    local source="${1}"
+    local target="${2}"
+    
+    echo "- '${source}' -> '${target}'"
+    
+    # Check for required params
+    [[ -z "${source}" ]] && echo "Error linking: Source path is empty" && return 1
+    [[ -z "${target}" ]] && echo "Error linking: Target path is empty" && return 1
+    
+    # Check that dotfile exists
+    if [[ ! -e "${source}" ]]; then
+        ls -la "${source}"
+        echo "Error creating link: The specified file or directory '${source}' does not exist"
+        return 1
+    fi
+    
+    # Check for existing item at ${target}
+    if [[ -w "${target}" ]]; then
+        if [[ -f "${target}" ]] || [[ -d "${target}" ]]; then
+            # File or folder
+            mv "${target}" "${target}.old"
+        else
+            # Link
+            rm -f "${target}"
+        fi
+        # Create link
+        ln -s "${source}" "${target}"
+    fi
+    return 0
 }
 
 # Determine distro
@@ -84,20 +84,20 @@ echo "${spacer}"
 parse_flags
 
 if [[ "${NO_DEPENDENCIES}" != "true" ]]; then
-	echo "
+    echo "
     Installing dependencies:"
-	echo "${spacer}"
-
-	# Refresh repos
-	package sync
-
-	# Install dependencies
-	package git
-	package curl
-	package bash-completion
-	package yaourt
-
-	echo "
+    echo "${spacer}"
+    
+    # Refresh repos
+    package sync
+    
+    # Install dependencies
+    package git
+    package curl
+    package bash-completion
+    package yaourt
+    
+    echo "
 Done installing dependencies
     "
 fi
@@ -106,47 +106,47 @@ fi
 echo '
 Linking files'
 echo "${spacer}"
-link "${abs_path}/bash/.bash_profile" "${HOME}/.bash_profile"
-link "${abs_path}/bash/.bashrc" "${HOME}/.bashrc"
-link "${abs_path}/bash/.bash_logout" "${HOME}/.bash_logout"
+link_to "${abs_path}/bash/.bash_profile" "${HOME}/.bash_profile"
+link_to "${abs_path}/bash/.bashrc" "${HOME}/.bashrc"
+link_to "${abs_path}/bash/.bash_logout" "${HOME}/.bash_logout"
 source "${abs_path}/bash/.bash_profile"
 
 # julia
-link "${abs_path}/julia/.juliarc.jl" "${HOME}/.juliarc.jl"
+link_to "${abs_path}/julia/.juliarc.jl" "${HOME}/.juliarc.jl"
 
 # vim
-link "${abs_path}/vim/.vimrc" "${HOME}/.vimrc"
+link_to "${abs_path}/vim/.vimrc" "${HOME}/.vimrc"
 
 # tmux
-link "${abs_path}/tmux/.tmux.conf" "${HOME}/.tmux.conf"
+link_to "${abs_path}/tmux/.tmux.conf" "${HOME}/.tmux.conf"
 
 # That which is not needed, without a graphical context, go below
 if [[ "${NO_XORG}" != "true" ]]; then
-	# xorg
-	link "${abs_path}/xorg/.xinitrc" "${HOME}/.xinitrc"
-	link "${abs_path}/xorg/.xprofile" "${HOME}/.xprofile"
-
-	# vscode
-	mkdir -p "${HOME}/.config/Code/User/snippets"
-	link "${abs_path}/vscode/snippets" "${HOME}/.config/Code/User/snippets"
-	link "${abs_path}/vscode/settings.json" "${HOME}/.config/Code/User/settings.json"
-
-	# vscode insiders
-	mkdir -p "${HOME}/.config/Code - Insiders/User/snippets"
-	link "${abs_path}/vscode/snippets" "${HOME}/.config/Code - Insiders/User/snippets"
-	link "${abs_path}/vscode/settings.json" "${HOME}/.config/Code - Insiders/User/settings.json"
-
-	# [[ -e "${HOME}/.config/plasma-workspace/env/xprofile.sh" ]] && rm -f "${HOME}/.config/plasma-workspace/env/xprofile.sh"
-	# touch "${HOME}/.config/plasma-workspace/env/xprofile.sh"
-	# chmod +x "${HOME}/.config/plasma-workspace/env/xprofile.sh"
-
-	# Generate xprofile file
-	# mkdir -p "${HOME}/.config/plasma-workspace/env"
-	# echo '#!/usr/bin/env bash' >"${HOME}/.config/plasma-workspace/env/xprofile.sh"
-	# echo '# generated by dotfiles/setup.sh' >>"${HOME}/.config/plasma-workspace/env/xprofile.sh"
-	# echo >>"${HOME}/.config/plasma-workspace/env/xprofile.sh"
-	# echo 'source ~/.bashenv' >>"${HOME}/.config/plasma-workspace/env/xprofile.sh"
-	# echo >>"${HOME}/.config/plasma-workspace/env/xprofile.sh"
+    # xorg
+    link_to "${abs_path}/xorg/.xinitrc" "${HOME}/.xinitrc"
+    link_to "${abs_path}/xorg/.xprofile" "${HOME}/.xprofile"
+    
+    # vscode
+    mkdir -p "${HOME}/.config/Code/User/snippets"
+    link_to "${abs_path}/vscode/snippets" "${HOME}/.config/Code/User/snippets"
+    link_to "${abs_path}/vscode/settings.json" "${HOME}/.config/Code/User/settings.json"
+    
+    # vscode insiders
+    mkdir -p "${HOME}/.config/Code - Insiders/User/snippets"
+    link_to "${abs_path}/vscode/snippets" "${HOME}/.config/Code - Insiders/User/snippets"
+    link_to "${abs_path}/vscode/settings.json" "${HOME}/.config/Code - Insiders/User/settings.json"
+    
+    # [[ -e "${HOME}/.config/plasma-workspace/env/xprofile.sh" ]] && rm -f "${HOME}/.config/plasma-workspace/env/xprofile.sh"
+    # touch "${HOME}/.config/plasma-workspace/env/xprofile.sh"
+    # chmod +x "${HOME}/.config/plasma-workspace/env/xprofile.sh"
+    
+    # Generate xprofile file
+    # mkdir -p "${HOME}/.config/plasma-workspace/env"
+    # echo '#!/usr/bin/env bash' >"${HOME}/.config/plasma-workspace/env/xprofile.sh"
+    # echo '# generated by dotfiles/setup.sh' >>"${HOME}/.config/plasma-workspace/env/xprofile.sh"
+    # echo >>"${HOME}/.config/plasma-workspace/env/xprofile.sh"
+    # echo 'source ~/.bashenv' >>"${HOME}/.config/plasma-workspace/env/xprofile.sh"
+    # echo >>"${HOME}/.config/plasma-workspace/env/xprofile.sh"
 fi
 
 trap : 0

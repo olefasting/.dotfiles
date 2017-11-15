@@ -1,5 +1,5 @@
 # If not running interactively, don't do anything
-[[ $- != *i* ]] && return
+[[ $- != *i* ]] && exit
 
 # Shell settings
 export TERM=xterm-256color
@@ -27,13 +27,14 @@ alias choosenim-install='curl https://nim-lang.org/choosenim/init.sh -sSf | sh'
 
 # Arch specific
 if [[ -f "/etc/arch-release" ]]; then
-	# Aliases
-	alias yao='yaourt'
-	alias pac='sudo pacman'
-
-	# Java
-	export JAVA_HOME="/usr/lib/jvm/default-runtime"
-	export JDK_HOME="${JAVA_HOME}"
+    # OS specific aliases
+    alias yao='yaourt'
+    alias pac='sudo pacman'
+    
+    # Java
+    export JAVA_HOME="/usr/lib/jvm/default-runtime"
+    export JDK_HOME="${JAVA_HOME}"
+    
 fi
 
 # gnupg home
@@ -45,9 +46,9 @@ export GOBIN="${GOPATH}/bin"
 
 # Create gopath if needed
 if [[ ! -e "${GOPATH}" ]]; then
-	mkdir -p "${GOPATH}/src"
-	mkdir "${GOPATH}/bin"
-	mkdir "${GOPATH}/pkg"
+    mkdir -p "${GOPATH}/src"
+    mkdir "${GOPATH}/bin"
+    mkdir "${GOPATH}/pkg"
 fi
 
 # Android sDK
@@ -60,37 +61,54 @@ nim_dir="${HOME}/.nimble/bin"
 # node.js
 NVM_DIR="${HOME}/.nvm"
 if [[ ! -d "${NVM_DIR}" ]]; then
-	if [[ ! -e "${NVM_DIR}" ]]; then
-		mkdir -p "${NVM_DIR}"
-	else
-		backup_name="${NVM_DIR}.bak"
-		echo "NVM_DIR '${NVM_DIR}' already exist as a file. Moving to '${backup_name}'"
-		while [[ -e "${backup_name}" ]]; do
-			new_backup_name="${backup_name}.bak"
-			mv "${backup_name}" "${new_backup_name}"
-			backup_name="${new_backup_name}"
-		done
-		mkdir -p "${NVM_DIR}"
-	fi
-
-	if [[ -d "${NVM_DIR}" ]]; then
-		if [[ -e $(which curl) ]]; then
-			curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
-			clear
-		elif [[ -e $(which wget) ]]; then
-			wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
-			clear
-		else
-			echo "Unable to download nvm. Install 'curl' or 'wget' to the system PATH to enable nvm"
-		fi
-	else
-		echo "Unable to create NVM_DIR '${NVM_DIR}'. Please resolve this and reopen the console"
-	fi
+    if [[ ! -e "${NVM_DIR}" ]]; then
+        mkdir -p "${NVM_DIR}"
+    else
+        backup_name="${NVM_DIR}.bak"
+        echo "NVM_DIR '${NVM_DIR}' already exist as a file. Moving to '${backup_name}'"
+        while [[ -e "${backup_name}" ]]; do
+            new_backup_name="${backup_name}.bak"
+            mv "${backup_name}" "${new_backup_name}"
+            backup_name="${new_backup_name}"
+        done
+        mkdir -p "${NVM_DIR}"
+    fi
+    
+    if [[ -d "${NVM_DIR}" ]]; then
+        if [[ -e $(which curl) ]]; then
+            curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
+            clear
+            elif [[ -e $(which wget) ]]; then
+            wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
+            clear
+        else
+            echo "Unable to download nvm. Install 'curl' or 'wget' to the system PATH to enable nvm"
+        fi
+    else
+        echo "Unable to create NVM_DIR '${NVM_DIR}'. Please resolve this and reopen the console"
+    fi
 fi
 
 if [[ -d "${NVM_DIR}" ]]; then
-	[[ -s "${NVM_DIR}/nvm.sh" ]] && source "${NVM_DIR}/nvm.sh"
-	export NVM_DIR
+    [[ -s "${NVM_DIR}/nvm.sh" ]] && source "${NVM_DIR}/nvm.sh"
+    export NVM_DIR
+fi
+
+# Reason
+refmt_target=$(which refmt)
+refmt_name=/usr/local/bin/refmt
+if [[ -e "${refmt_target}" ]]; then
+    if [[ ! -e "${refmt_name}" ]] || [[ "${refmt_target}" != $(readlink "${refmt_name}") ]]; then
+        refmt_delete_cmd="rm -rf ${refmt_name}"
+        refmt_link_cmd="ln -s ${refmt_target} ${refmt_name}"
+        if [[ "${EUID}" != "0" ]]; then
+            echo "Creating link from refmt binary to '${refmt_name}' using sudo. Please authenticate."
+            refmt_delete_cmd="sudo ${refmt_delete_cmd}"
+            refmt_link_cmd="sudo ${refmt_link_cmd}"
+        fi
+        [[ -d "${refmt_name}" ]] && $(${refmt_delete_cmd})
+        $(${refmt_link_cmd})
+    fi
 fi
 
 # Android NDK
@@ -101,53 +119,53 @@ export ANDROID_TOOLCHAINS=${ANDROID_NDK}/toolchains
 export SSH_ASKPASS="/usr/bin/ksshaskpass"
 
 _asdf() {
-	local cur="${COMP_WORDS[COMP_CWORD]}"
-	local cmd="${COMP_WORDS[1]}"
-	local prev="${COMP_WORDS[COMP_CWORD - 1]}"
-	local plugins=$(asdf plugin-list | tr '\n' ' ')
-
-	COMPREPLY=()
-
-	case "$cmd" in
-	plugin-update)
-		COMPREPLY=($(compgen -W "$plugins --all" -- $cur))
-		;;
-	plugin-remove | current | list | list-all)
-		COMPREPLY=($(compgen -W "$plugins" -- $cur))
-		;;
-	install)
-		if [[ "$plugins" == *"$prev"* ]]; then
-			local versions=$(asdf list-all $prev)
-			COMPREPLY=($(compgen -W "$versions" -- $cur))
-		else
-			COMPREPLY=($(compgen -W "$plugins" -- $cur))
-		fi
-		;;
-	uninstall | where | reshim)
-		if [[ "$plugins" == *"$prev"* ]]; then
-			local versions=$(asdf list $prev)
-			COMPREPLY=($(compgen -W "$versions" -- $cur))
-		else
-			COMPREPLY=($(compgen -W "$plugins" -- $cur))
-		fi
-		;;
-	*)
-		local cmds='plugin-add plugin-list plugin-remove plugin-update install uninstall current where list list-all reshim'
-		COMPREPLY=($(compgen -W "$cmds" -- $cur))
-		;;
-	esac
-
-	return 0
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    local cmd="${COMP_WORDS[1]}"
+    local prev="${COMP_WORDS[COMP_CWORD - 1]}"
+    local plugins=$(asdf plugin-list | tr '\n' ' ')
+    
+    COMPREPLY=()
+    
+    case "$cmd" in
+        plugin-update)
+            COMPREPLY=($(compgen -W "$plugins --all" -- $cur))
+        ;;
+        plugin-remove | current | list | list-all)
+            COMPREPLY=($(compgen -W "$plugins" -- $cur))
+        ;;
+        install)
+            if [[ "$plugins" == *"$prev"* ]]; then
+                local versions=$(asdf list-all $prev)
+                COMPREPLY=($(compgen -W "$versions" -- $cur))
+            else
+                COMPREPLY=($(compgen -W "$plugins" -- $cur))
+            fi
+        ;;
+        uninstall | where | reshim)
+            if [[ "$plugins" == *"$prev"* ]]; then
+                local versions=$(asdf list $prev)
+                COMPREPLY=($(compgen -W "$versions" -- $cur))
+            else
+                COMPREPLY=($(compgen -W "$plugins" -- $cur))
+            fi
+        ;;
+        *)
+            local cmds='plugin-add plugin-list plugin-remove plugin-update install uninstall current where list list-all reshim'
+            COMPREPLY=($(compgen -W "$cmds" -- $cur))
+        ;;
+    esac
+    
+    return 0
 }
 
 if [ "${BASH_SOURCE[0]}" != "" ]; then
-	script="${BASH_SOURCE[0]}"
+    script="${BASH_SOURCE[0]}"
 else
-	script="${0}"
+    script="${0}"
 fi
 asdf=$(
-	cd $(dirname $script) &>/dev/null
-	echo "${PWD}"
+    cd $(dirname $script) &>/dev/null
+    echo "${PWD}"
 )
 
 # Show info about any unavailable
