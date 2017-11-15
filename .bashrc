@@ -1,0 +1,1 @@
+/home/oasf/devel/dotfiles/bash/.bashrc /home/oasf/.bashrc

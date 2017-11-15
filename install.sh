@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-NO_DEPENDENCIES="false" ./setup.sh
+NO_DEPS="false" ./setup.sh

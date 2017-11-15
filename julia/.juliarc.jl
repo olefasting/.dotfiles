@@ -1,11 +1,7 @@
-using OhMyREPL
-
-const WORKSPACE_FILE_NAME = "_init.jl"
-
-if isfile(pwd() + WORKSPACE_FILE_NAME)
-    include(WORKSPACE_FILE_NAME)
+function paste_eval()
+    include_string(clipboard())
 end
 
-##if WORD_SIZE == 64
-##    ENV["JULIA_PKGDIR"] = Pkg.dir() * "64"
-##end
+if isfile("projector.jl")
+    include(realpath("$(pwd())/projector.jl"))
+end

@@ -1,0 +1,1 @@
+/home/oasf/devel/dotfiles/bash/.bash_logout /home/oasf/.bash_logout
