@@ -1,7 +1,9 @@
-backup
-build
-.local
-
 .DS_Store
 .directory
 thumbs.db
+
+.idea/dotfiles.iml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
+vscode/snippets/

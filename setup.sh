@@ -127,12 +127,12 @@ if [[ "${NO_XORG}" != "true" ]]; then
 	link "${abs_path}/xorg/.xprofile" "${HOME}/.xprofile"
 
 	# vscode
-	mkdir -p "${HOME}/.config/Code/User"
+	mkdir -p "${HOME}/.config/Code/User/snippets"
 	link "${abs_path}/vscode/snippets" "${HOME}/.config/Code/User/snippets"
 	link "${abs_path}/vscode/settings.json" "${HOME}/.config/Code/User/settings.json"
 
 	# vscode insiders
-	mkdir -p "${HOME}/.config/Code - Insiders/User"
+	mkdir -p "${HOME}/.config/Code - Insiders/User/snippets"
 	link "${abs_path}/vscode/snippets" "${HOME}/.config/Code - Insiders/User/snippets"
 	link "${abs_path}/vscode/settings.json" "${HOME}/.config/Code - Insiders/User/settings.json"
 
