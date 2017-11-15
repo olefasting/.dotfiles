@@ -27,7 +27,7 @@ if [[ ! -d "${abs_path}" ]]; then
 	fi
 
 	pushd . >/dev/null
-	cd $(dirname ${abs_path}) >/dev/null
+	cd $(dirname "${abs_path}") >/dev/null
 	abs_path=$(pwd)
 	popd >/dev/null
 fi
@@ -38,31 +38,36 @@ source script/distro.sh
 source script/flags.sh
 source script/package.sh
 
-# This function creates a symbolic link from '${1}' (source) to '${2] (target)'
-link() {
-	local target="${1}"
-	local name="${2}"
+# This function installs a dotfile. It needs two parameters; the path to the dotfile to be
+# installed, and the link name to use when installing.
+link_to() {
+	local source="${1}"
+	local target="${2}"
 
-	echo "- '${target}' -> '${name}'"
+	echo "- '${source}' -> '${target}'"
 
 	# Check for required params
-	[[ -z "${target}" ]] && echo "Error linking: Source path is empty" && return 1
-	[[ -z "${name}" ]] && echo "Error linking: Target path is empty" && return 1
+	[[ -z "${source}" ]] && echo "Error linking: Source path is empty" && return 1
+	[[ -z "${target}" ]] && echo "Error linking: Target path is empty" && return 1
 
-	# Check that file exists
-	if [[ ! -e "${target}" ]]; then
-		echo "Error creating link: The specified file or directory '${target}' does not exist"
-	else
-		if [[ -e "${name}" ]]; then
-			if [[ -f "${name}" ]] || [[ -d "${name}" ]]; then
-				# File or folder. Back up if appropriate
-				if [[ "${BACKUP_CURRENT}" == "true" ]]; then
-					sudo mv "${name}" "${name}.old"
-				fi
-			fi
-			rm -rf "${name}"
+	# Check that dotfile exists
+	if [[ ! -e "${source}" ]]; then
+		ls -la "${source}"
+		echo "Error creating link: The specified file or directory '${source}' does not exist"
+		return 1
+	fi
+
+	# Check for existing item at ${target}
+	if [[ -w "${target}" ]]; then
+		if [[ -f "${target}" ]] || [[ -d "${target}" ]]; then
+			# File or folder
+			mv "${target}" "${target}.old"
+		else
+			# Link
+			rm -f "${target}"
 		fi
-		[[ -e "${name}" ]] || ln -s "${target}" "${name}"
+		# Create link
+		ln -s "${source}" "${target}"
 	fi
 	return 0
 }
@@ -75,13 +80,15 @@ echo "${spacer}"
 
 parse_flags
 
-if [[ "${NO_DEPS}" != "true" ]]; then
+if [[ "${NO_DEPENDENCIES}" != "true" ]]; then
 	echo "
     Installing dependencies:"
 	echo "${spacer}"
-	# Sync package managers
+
+	# Refresh repos
 	package sync
-	# Dependencies
+
+	# Install dependencies
 	package git
 	package curl
 	package bash-completion
@@ -96,34 +103,41 @@ fi
 echo '
 Linking files'
 echo "${spacer}"
-link "${abs_path}/bash/.bash_profile" "${HOME}/.bash_profile"
-link "${abs_path}/bash/.bashrc" "${HOME}/.bashrc"
-link "${abs_path}/bash/.bash_logout" "${HOME}/.bash_logout"
+link_to "${abs_path}/bash/.bash_profile" "${HOME}/.bash_profile"
+link_to "${abs_path}/bash/.bashrc" "${HOME}/.bashrc"
+link_to "${abs_path}/bash/.bash_logout" "${HOME}/.bash_logout"
+source "${abs_path}/bash/.bash_profile"
+
 # julia
-link "${abs_path}/julia/.juliarc.jl" "${HOME}/.juliarc.jl"
+link_to "${abs_path}/julia/.juliarc.jl" "${HOME}/.juliarc.jl"
+
 # vim
-link "${abs_path}/vim/.vimrc" "${HOME}/.vimrc"
+link_to "${abs_path}/vim/.vimrc" "${HOME}/.vimrc"
+
 # tmux
-link "${abs_path}/tmux/.tmux.conf" "${HOME}/.tmux.conf"
+link_to "${abs_path}/tmux/.tmux.conf" "${HOME}/.tmux.conf"
 
 source "${abs_path}/bash/.bash_profile"
 
 if [[ "${NO_XORG}" != "true" ]]; then
 	# xorg
-	link "${abs_path}/xorg/.xinitrc" "${HOME}/.xinitrc"
-	link "${abs_path}/xorg/.xprofile" "${HOME}/.xprofile"
+	link_to "${abs_path}/xorg/.xinitrc" "${HOME}/.xinitrc"
+	link_to "${abs_path}/xorg/.xprofile" "${HOME}/.xprofile"
+
 	# vscode
-	mkdir -p "${HOME}/.config/Code/User"
-	link "${abs_path}/vscode/snippets" "${HOME}/.config/Code/User/snippets"
-	link "${abs_path}/vscode/settings.json" "${HOME}/.config/Code/User/settings.json"
+	mkdir -p "${HOME}/.config/Code/User/snippets"
+	link_to "${abs_path}/vscode/snippets" "${HOME}/.config/Code/User/snippets"
+	link_to "${abs_path}/vscode/settings.json" "${HOME}/.config/Code/User/settings.json"
+
 	# vscode insiders
-	mkdir -p "${HOME}/.config/Code - Insiders/User"
-	link "${abs_path}/vscode/snippets" "${HOME}/.config/Code - Insiders/User/snippets"
-	link "${abs_path}/vscode/settings.json" "${HOME}/.config/Code - Insiders/User/settings.json"
+	mkdir -p "${HOME}/.config/Code - Insiders/User/snippets"
+	link_to "${abs_path}/vscode/snippets" "${HOME}/.config/Code - Insiders/User/snippets"
+	link_to "${abs_path}/vscode/settings.json" "${HOME}/.config/Code - Insiders/User/settings.json"
 
 	# [[ -e "${HOME}/.config/plasma-workspace/env/xprofile.sh" ]] && rm -f "${HOME}/.config/plasma-workspace/env/xprofile.sh"
 	# touch "${HOME}/.config/plasma-workspace/env/xprofile.sh"
 	# chmod +x "${HOME}/.config/plasma-workspace/env/xprofile.sh"
+
 	# Generate xprofile file
 	# mkdir -p "${HOME}/.config/plasma-workspace/env"
 	# echo '#!/usr/bin/env bash' >"${HOME}/.config/plasma-workspace/env/xprofile.sh"
