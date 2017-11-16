@@ -94,18 +94,18 @@ if [[ -d "${NVM_DIR}" ]]; then
 fi
 
 # Reason
-refmt_target=$(which refmt)
-refmt_name=/usr/local/bin/refmt
-if [[ -e "${refmt_target}" ]]; then
-	if [[ ! -e "${refmt_name}" ]] || [[ "${refmt_target}" != $(readlink "${refmt_name}") ]]; then
-		if [[ "${EUID}" == "0" ]]; then
-			ln -s "${refmt_target}" "${refmt_name}"
-		else
-			echo "Linking refmt requires the use of sudo and was canceled. Use the command 'install-refmt' in stead"
-			alias install-refmt="sudo ln -s ${refmt_target} ${refmt_name} && [[ -e ${refmt_name} ]] && unalias install-refmt"
-		fi
-	fi
-fi
+# refmt_target=$(which refmt) >/dev/null
+# refmt_name=/usr/local/bin/refmt
+# if [[ -e "${refmt_target}" ]]; then
+# 	if [[ ! -e "${refmt_name}" ]] || [[ "${refmt_target}" != $(readlink "${refmt_name}") ]]; then
+#		if [[ "${EUID}" == "0" ]]; then
+#			ln -s "${refmt_target}" "${refmt_name}"
+#		else
+#			echo "Linking refmt requires the use of sudo and was canceled. Use the command 'install-refmt' in stead"
+#			alias install-refmt="sudo ln -s ${refmt_target} ${refmt_name} && [[ -e ${refmt_name} ]] && unalias install-refmt"
+#		fi
+#    fi
+# fi
 
 # Android NDK
 export ANDROID_NDK=/opt/android-ndk-beta
