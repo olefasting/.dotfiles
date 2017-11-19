@@ -169,5 +169,5 @@ asdf=$(
 # source /usr/share/doc/pkgfile/command-not-found.bash
 
 # Update path variable
-export PATH="${PATH}:/opt/vscode/bin:${HOME}/.local/bin:${nim_dir}/sbin:${asdf}/bin:${asdf}/shims:${GOBIN}"
+export PATH="${PATH}:/opt/vscode/bin:/opt/clojurescript/bin:${HOME}/.local/bin:${nim_dir}/sbin:${asdf}/bin:${asdf}/shims:${GOBIN}"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
