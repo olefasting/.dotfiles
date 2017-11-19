@@ -2,8 +2,5 @@
 .directory
 thumbs.db
 
-.idea/dotfiles.iml
-.idea/modules.xml
-.idea/vcs.xml
-.idea/workspace.xml
-vscode/snippets/
+.idea
+.vscode
