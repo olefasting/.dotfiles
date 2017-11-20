@@ -4,3 +4,6 @@ thumbs.db
 
 .idea
 .vscode
+
+/build
+/backup
