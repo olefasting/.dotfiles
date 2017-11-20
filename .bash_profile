@@ -1,1 +1,0 @@
-/home/oasf/devel/dotfiles/bash/.bash_profile /home/oasf/.bash_profile

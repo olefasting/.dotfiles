@@ -1,1 +1,0 @@
-/home/oasf/devel/dotfiles/xorg/.xinitrc /home/oasf/.xinitrc

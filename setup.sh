@@ -80,7 +80,7 @@ echo "${spacer}"
 
 parse_flags
 
-if [[ "${NO_DEPENDENCIES}" != "true" ]]; then
+if [[ "${NO_DEPS}" != "true" ]]; then
 	echo "
     Installing dependencies:"
 	echo "${spacer}"
@@ -121,6 +121,7 @@ source "${abs_path}/bash/.bash_profile"
 
 if [[ "${NO_XORG}" != "true" ]]; then
 	# xorg
+	link_to "${abs_path}/xorg/.xserverrc" "${HOME}/.xserverrc"
 	link_to "${abs_path}/xorg/.xinitrc" "${HOME}/.xinitrc"
 	link_to "${abs_path}/xorg/.xprofile" "${HOME}/.xprofile"
 
