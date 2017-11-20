@@ -59,8 +59,8 @@ link_to() {
 
 	# Check for existing item at ${target}
 	if [[ -w "${target}" ]]; then
-		if [[ -f "${target}" ]] || [[ -d "${target}" ]]; then
-			# File or folder
+		if [[ "${BACKUP_EXISTING}" ]] && [[ -f "${target}" ]] || [[ -d "${target}" ]]; then
+			# File or folder			
 			mv "${target}" "${target}.old"
 		else
 			# Link
