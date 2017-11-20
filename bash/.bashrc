@@ -1,4 +1,3 @@
-# If not running interactively, don't do anything
 [[ $- != *i* ]] && exit
 
 # Shell settings
@@ -22,7 +21,50 @@ alias ls='ls --color=auto'
 alias ll='ls -la'
 alias psa='ps -aux'
 
-alias choosenim-install='curl https://nim-lang.org/choosenim/init.sh -sSf | sh'
+# nim
+nimble_dir="${HOME}/.nimble"
+nimble_bin_dir="${nimble_dir}/bin"
+mkdir -p "${nimble_bin_dir}"
+export PATH="${PATH}:${nimble_bin_dir}"
+unset nimble_dir
+unset nimble_bin_dir
+
+# Rotate xorg logs
+alias rotate_xorg_logs='
+	xorg_log_dir="${HOME}/.local/share/xorg"
+	xorg_log_target="${xorg_log_dir}/Xorg.0.log" 
+	[[ ! -e "${xorg_log_dir}" ]] && mkdir -p "${xorg_log_dir}"
+	if [[ -e $(which Xorg) ]]; then
+		if [[ -e "${xorg_log_target}" ]]; then
+			cnt=0
+			prev=0
+			done="false"
+			while [[ "${done}" != "true" ]]; do
+				echo "${done}"
+				prev="${cnt}"
+				cur_file="${xorg_log_dir}/Xorg.${cnt}.log"
+				if [[ -e "${cur_file}" ]]; then
+				        let cnt=$cnt+1
+			       	else
+					echo "Xorg log rotation"
+					echo "[move] ${xorg_log_target} => ${cur_file}"
+					mv "${xorg_log_target}" "${cur_file}"
+					echo "[newf] ${xorg_log_target}"
+					touch "${xorg_log_target}"
+					done="true"
+				fi
+			done
+			unset cnt
+			unset prev
+			unset done
+		fi
+	fi
+	unset xorg_log_diri
+	unset xorg_log_target
+'
+
+# Rootless xinit fix
+alias startx='startx -- -keeptty > "${xorg_log_target}" 2>&1'
 
 # Arch specific
 if [[ -f "/etc/arch-release" ]]; then
@@ -33,7 +75,6 @@ if [[ -f "/etc/arch-release" ]]; then
 	# Java
 	export JAVA_HOME="/usr/lib/jvm/default-runtime"
 	export JDK_HOME="${JAVA_HOME}"
-
 fi
 
 # gnupg home
@@ -52,10 +93,6 @@ fi
 
 # Android sDK
 export ANDROID_SDK_ROOT="${HOME}/Android/Sdk"
-
-# nim
-nim_dir="${HOME}/.nimble/bin"
-[[ ! -e "${nim_dir}" ]] && mkdir -p "${nim_dir}"
 
 # node.js
 NVM_DIR="${HOME}/.nvm"
@@ -104,7 +141,7 @@ fi
 #			echo "Linking refmt requires the use of sudo and was canceled. Use the command 'install-refmt' in stead"
 #			alias install-refmt="sudo ln -s ${refmt_target} ${refmt_name} && [[ -e ${refmt_name} ]] && unalias install-refmt"
 #		fi
-#    fi
+#    	fi
 # fi
 
 # Android NDK
@@ -169,5 +206,5 @@ asdf=$(
 # source /usr/share/doc/pkgfile/command-not-found.bash
 
 # Update path variable
-export PATH="${PATH}:/opt/vscode/bin:${HOME}/.local/bin:${nim_dir}/sbin:${asdf}/bin:${asdf}/shims:${GOBIN}"
+export PATH="${PATH}:/opt/vscode/bin:${HOME}/:${asdf}/bin:${asdf}/shims:${GOBIN}"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
