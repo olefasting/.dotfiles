@@ -1,13 +1,5 @@
 #!/bin/sh
-# LOGS_FOLDER="${HOME}/.local/share/xorg"
-# mkdir -p "${LOGS_FOLDER}"
-# let cnt=0
-# log_file="${LOGS_FOLDER}/Xorg.0.log"
-# while [ -e "${LOGS_FOLDER}/Xorg.${cnt}.log" ]; do
-#	let cnt+=1
-#	cur="${LOGS_FOLDER}/Xorg.${cnt}.log"
-#	[ -e "${cur}" ] || mv "${log_file}" "${cur}"
-#	unset cur
-# done
-# unset cnt
+LOGS_FOLDER="${HOME}/.local/share/xorg"
+log_file="${LOGS_FOLDER}/Xorg.0.log"
+mkdir -p "${LOGS_FOLDER}"
 exec /usr/bin/X -nolisten tcp vt"${XDG_VTNR}" -keeptty "$@" > "${log_file}" 2>&1
