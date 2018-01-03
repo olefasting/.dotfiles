@@ -83,5 +83,15 @@
             "languageId": "julia",
             "cellIdentificationPattern": "^(#\\s*%%|#\\s*\\<codecell\\>|#\\s*In\\[\\d*?\\]|#\\s*In\\[ \\])(.*)"
         }
-    ]
-}
+    ],
+    "gitlens.advanced.messages": {
+      "suppressCommitHasNoPreviousCommitWarning": false,
+      "suppressCommitNotFoundWarning": false,
+      "suppressFileNotUnderSourceControlWarning": false,
+      "suppressGitVersionWarning": false,
+      "suppressLineUncommittedWarning": false,
+      "suppressNoRepositoryWarning": false,
+      "suppressUpdateNotice": true,
+      "suppressWelcomeNotice": false
+    }
+  }

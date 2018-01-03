@@ -94,6 +94,9 @@ fi
 # Android sDK
 export ANDROID_SDK_ROOT="${HOME}/Android/Sdk"
 
+# Ruby
+export PATH="$PATH:/home/oasf/.gem/ruby/2.4.0/bin"
+
 # node.js
 NVM_DIR="${HOME}/.nvm"
 if [[ ! -d "${NVM_DIR}" ]]; then

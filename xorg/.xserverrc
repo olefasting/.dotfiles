@@ -1,5 +1,5 @@
 #!/bin/sh
-LOGS_FOLDER="${HOME}/.local/share/xorg"
+LOGS_FOLDER="${HOME}/.local/.share"
 log_file="${LOGS_FOLDER}/Xorg.0.log"
 mkdir -p "${LOGS_FOLDER}"
-exec /usr/bin/X -nolisten tcp vt"${XDG_VTNR}" -keeptty "$@" > "${log_file}" 2>&1
+exec /usr/bin/X -nolisten tcp vt"${XDG_VTNR}" -keeptty "$@" >"${log_file}" 2>&1
