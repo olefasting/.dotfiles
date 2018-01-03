@@ -1,5 +1,8 @@
 [[ $- != *i* ]] && exit
 
+# wifi
+export COUNTRY=NO
+
 # Shell settings
 export TERM=xterm-256color
 
