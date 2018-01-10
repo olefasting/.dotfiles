@@ -214,3 +214,6 @@ asdf=$(
 # Update path variable
 export PATH="${PATH}:/opt/vscode/bin:/opt/clojurescript/bin:${HOME}/.local/bin:${nim_dir}/sbin:${asdf}/bin:${asdf}/shims:${GOBIN}"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+
+# local stuff
+[[ -e "${HOME}/.bash_local" ]] && source "${HOME}/.bash_local"
