@@ -171,4 +171,44 @@
     <option name="workingDir" value="$ProjectFileDir$" />
     <envs />
   </TaskOptions>
+  <TaskOptions>
+    <option name="arguments" value="--fix $FilePathRelativeToProjectRoot$" />
+    <option name="checkSyntaxErrors" value="false" />
+    <option name="description" />
+    <option name="exitCodeBehavior" value="ERROR" />
+    <option name="fileExtension" value="vue" />
+    <option name="immediateSync" value="false" />
+    <option name="name" value="eslint fix vue" />
+    <option name="output" value="$FileDirRelativeToProjectRoot$" />
+    <option name="outputFilters">
+      <array />
+    </option>
+    <option name="outputFromStdout" value="false" />
+    <option name="program" value="/home/oasf/devel/adsign/highstage-extranet/node_modules/.bin/eslint" />
+    <option name="runOnExternalChanges" value="true" />
+    <option name="scopeName" value="Project Files" />
+    <option name="trackOnlyRoot" value="false" />
+    <option name="workingDir" value="$ProjectFileDir$" />
+    <envs />
+  </TaskOptions>
+  <TaskOptions>
+    <option name="arguments" value="--fix $FilePathRelativeToProjectRoot$" />
+    <option name="checkSyntaxErrors" value="false" />
+    <option name="description" />
+    <option name="exitCodeBehavior" value="ERROR" />
+    <option name="fileExtension" value="js" />
+    <option name="immediateSync" value="false" />
+    <option name="name" value="eslint fix js" />
+    <option name="output" value="$FileDirRelativeToProjectRoot$" />
+    <option name="outputFilters">
+      <array />
+    </option>
+    <option name="outputFromStdout" value="false" />
+    <option name="program" value="/home/oasf/devel/adsign/highstage-extranet/node_modules/.bin/eslint" />
+    <option name="runOnExternalChanges" value="true" />
+    <option name="scopeName" value="Project Files" />
+    <option name="trackOnlyRoot" value="false" />
+    <option name="workingDir" value="$ProjectFileDir$" />
+    <envs />
+  </TaskOptions>
 </TaskOptions>
