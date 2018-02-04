@@ -32,7 +32,7 @@ if [[ ! -e "${nim_dir}" ]]; then
 fi
 
 nimble_dir="${HOME}/.nimble"
-mkdir -p "${nimble_bin_dir}"
+mkdir -p "${nimble_dir}/bin"
 
 export PATH="${PATH}:${nimble_dir}/bin:${nim_dir}/bin"
 
