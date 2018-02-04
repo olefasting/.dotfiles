@@ -25,12 +25,20 @@ alias ll='ls -la'
 alias psa='ps -aux'
 
 # nim
+nim_dir=/opt/nim
+nim_repo=https://github.com/nim-lang/Nim.git
+if [[ ! -e "${nim_dir}" ]]; then
+    [[ -e $(which git) ]] && sudo git clone "${nim_repo}" "${nim_dir}"
+fi
+
 nimble_dir="${HOME}/.nimble"
-nimble_bin_dir="${nimble_dir}/bin"
 mkdir -p "${nimble_bin_dir}"
-export PATH="${PATH}:${nimble_bin_dir}"
+
+export PATH="${PATH}:${nimble_dir}/bin:${nim_dir}/bin"
+
+unset nim_dir
+unset nim_repo
 unset nimble_dir
-unset nimble_bin_dir
 
 # Rotate xorg logs
 alias rotate_xorg_logs='
