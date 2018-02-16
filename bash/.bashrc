@@ -28,7 +28,7 @@ alias psa='ps -aux'
 nim_dir=/opt/nim
 nim_repo=https://github.com/nim-lang/Nim.git
 if [[ ! -e "${nim_dir}" ]]; then
-    [[ -e $(which git) ]] && sudo git clone "${nim_repo}" "${nim_dir}"
+	[[ -e $(which git) ]] && sudo git clone "${nim_repo}" "${nim_dir}"
 fi
 
 nimble_dir="${HOME}/.nimble"
@@ -90,6 +90,9 @@ fi
 
 # gnupg home
 export GNUPGHOME="${HOME}/.gnupg"
+
+# Haskell
+eval "$(stack --bash-completion-script stack)"
 
 # Gopath
 export GOPATH="${HOME}/devel/gopath"
