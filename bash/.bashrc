@@ -157,11 +157,9 @@ export ANDROID_SDK_ROOT="${HOME}/Android/Sdk"
 export PATH="$PATH:/home/oasf/.gem/ruby/2.4.0/bin"
 
 # node.js
-NVM_DIR="${HOME}/.nvm"
-if [[ ! -d "${NVM_DIR}" ]]; then
-	if [[ ! -e "${NVM_DIR}" ]]; then
-		mkdir -p "${NVM_DIR}"
-	else
+export NVM_DIR="${HOME}/.nvm"
+if [[ ! -d "${NVM_DIR}" ]] || [[ ! -e $(which nvm) ]]; then
+	if [[ -e "${NVM_DIR}" ]] && [[ ! -d "${NVM_DIR}" ]]; then
 		backup_name="${NVM_DIR}.bak"
 		echo "NVM_DIR '${NVM_DIR}' already exist as a file. Moving to '${backup_name}'"
 		while [[ -e "${backup_name}" ]]; do
@@ -169,28 +167,19 @@ if [[ ! -d "${NVM_DIR}" ]]; then
 			mv "${backup_name}" "${new_backup_name}"
 			backup_name="${new_backup_name}"
 		done
-		mkdir -p "${NVM_DIR}"
 	fi
-
-	if [[ -d "${NVM_DIR}" ]]; then
-		if [[ -e $(which curl) ]]; then
-			curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
-			clear
-		elif [[ -e $(which wget) ]]; then
-			wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
-			clear
-		else
-			echo "Unable to download nvm. Install 'curl' or 'wget' to the system PATH to enable nvm"
-		fi
+	if [[ -e $(which curl) ]]; then
+		curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
+		clear
+	elif [[ -e $(which wget) ]]; then
+		wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
+		clear
 	else
-		echo "Unable to create NVM_DIR '${NVM_DIR}'. Please resolve this and reopen the console"
+		echo "Unable to download nvm. Install 'curl' or 'wget' to the system PATH to enable nvm"
 	fi
 fi
-
-if [[ -d "${NVM_DIR}" ]]; then
-	[[ -s "${NVM_DIR}/nvm.sh" ]] && source "${NVM_DIR}/nvm.sh"
-	export NVM_DIR
-fi
+[ -s "${NVM_DIR}/nvm.sh" ] && \. "${NVM_DIR}/nvm.sh"
+[ -s "${NVM_DIR}/bash_completion" ] && \. "${NVM_DIR}/bash_completion"
 
 # Reason
 # refmt_target=$(which refmt) >/dev/null
@@ -268,8 +257,7 @@ asdf=$(
 # source /usr/share/doc/pkgfile/command-not-found.bash
 
 # Update path variable
-export PATH="${PATH}:/opt/vscode/bin:/opt/clojurescript/bin:${HOME}/.local/bin:${nim_dir}/sbin:${asdf}/bin:${asdf}/shims:${GOBIN}"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+export PATH="${PATH}:/opt/vscode/bin:/opt/clojurescript/bin:${HOME}/.local/bin:${nim_dir}/sbin:${asdf}/bin:${asdf}/shims:${GOBIN}:$HOME/.cargo/bin"
 
 # local stuff
 [[ -e "${HOME}/.bash_local" ]] && source "${HOME}/.bash_local"
