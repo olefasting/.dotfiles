@@ -158,7 +158,10 @@ export PATH="$PATH:/home/oasf/.gem/ruby/2.4.0/bin"
 
 # node.js
 export NVM_DIR="${HOME}/.nvm"
-if [[ ! -d "${NVM_DIR}" ]] || [[ ! -e $(which nvm) ]]; then
+
+[ -s "${NVM_DIR}/nvm.sh" ] && \. "${NVM_DIR}/nvm.sh"
+
+if [[ ! -d "${NVM_DIR}" ]]; then
 	if [[ -e "${NVM_DIR}" ]] && [[ ! -d "${NVM_DIR}" ]]; then
 		backup_name="${NVM_DIR}.bak"
 		echo "NVM_DIR '${NVM_DIR}' already exist as a file. Moving to '${backup_name}'"
@@ -178,8 +181,8 @@ if [[ ! -d "${NVM_DIR}" ]] || [[ ! -e $(which nvm) ]]; then
 		echo "Unable to download nvm. Install 'curl' or 'wget' to the system PATH to enable nvm"
 	fi
 fi
-[ -s "${NVM_DIR}/nvm.sh" ] && \. "${NVM_DIR}/nvm.sh"
-[ -s "${NVM_DIR}/bash_completion" ] && \. "${NVM_DIR}/bash_completion"
+
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 # Reason
 # refmt_target=$(which refmt) >/dev/null
@@ -259,5 +262,4 @@ asdf=$(
 # Update path variable
 export PATH="${PATH}:/opt/vscode/bin:/opt/clojurescript/bin:${HOME}/.local/bin:${nim_dir}/sbin:${asdf}/bin:${asdf}/shims:${GOBIN}:$HOME/.cargo/bin"
 
-# local stuff
 [[ -e "${HOME}/.bash_local" ]] && source "${HOME}/.bash_local"
