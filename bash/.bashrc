@@ -68,6 +68,7 @@ alias llvm-modextract=llvm-modextract-5.0
 alias llvm-PerfectShuffle=llvm-PerfectShuffle-5.0
 alias llvm-size=llvm-size-5.0
 alias llvm-xray=llvm-xray-5.0
+alias clang-format=clang-format-5.0
 
 # nim
 nim_dir=/opt/nim
