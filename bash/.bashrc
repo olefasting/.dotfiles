@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 [[ $- != *i* ]] && exit
 
 # wifi
@@ -13,7 +14,7 @@ export PS1='[\u@\h \W]\$ '
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 
-export LOOPS_HOME=/srv/loops_home
+OREBIT_TELLER_PATH="${HOME}/orebit-teller"
 
 # Autocomplete
 complete -cf sudo man which
@@ -26,49 +27,49 @@ alias ll='ls -la'
 alias psa='ps -aux'
 
 # llvm
-alias llvm-ar=llvm-ar-5.0
-alias llvm-c-test=llvm-c-test-5.0
-alias llvm-dlltool=llvm-dlltool-5.0
-alias llvm-link=llvm-link-5.0
-alias llvm-mt=llvm-mt-5.0
-alias llvm-profdata=llvm-profdata-5.0
-alias llvm-split=llvm-split-5.0
-alias llvm-as=llvm-as-5.0
-alias llvm-cvtres=llvm-cvtres-5.0
-alias llvm-dsymutil=llvm-dsymutil-5.0
-alias llvm-lto2=llvm-lto2-5.0
-alias llvm-nm=llvm-nm-5.0
-alias llvm-ranlib=llvm-ranlib-5.0
-alias llvm-stress=llvm-stress-5.0
-alias llvm-bcanalyzer=llvm-bcanalyzer-5.0
-alias llvm-cxxdump=llvm-cxxdump-5.0
-alias llvm-dwarfdump=llvm-dwarfdump-5.0
-alias llvm-lto=llvm-lto-5.0
-alias llvm-objdump=llvm-objdump-5.0
-alias llvm-readelf=llvm-readelf-5.0
-alias llvm-readelf=llvm-strings-5.0
-alias llvm-cat=llvm-cat-5.0
-alias llvm-cxxfilt=llvm-cxxfilt-5.0
-alias llvm-dwp=llvm-dwp-5.0
-alias llvm-mc=llvm-mc-5.0
-alias llvm-opt-report=llvm-opt-report-5.0
-alias llvm-readobj=llvm-readobj-5.0
-alias llvm-symbolizer=llvm-symbolizer-5.0
-alias llvm-config=llvm-config-5.0
-alias llvm-diff=llvm-diff-5.0
-alias llvm-extract=llvm-extract-5.0
-alias llvm-mcmarkup=llvm-mcmarkup-5.0
-alias llvm-pdbutil=llvm-pdbutil-5.0
-alias llvm-rtdyld=llvm-rtdyld-5.0
-alias llvm-tblgen=llvm-tblgen-5.0
-alias llvm-cov=llvm-cov-5.0
-alias llvm-dis=llvm-dis-5.0
-alias llvm-lib=llvm-lib-5.0
-alias llvm-modextract=llvm-modextract-5.0
-alias llvm-PerfectShuffle=llvm-PerfectShuffle-5.0
-alias llvm-size=llvm-size-5.0
-alias llvm-xray=llvm-xray-5.0
-alias clang-format=clang-format-5.0
+alias llvm-ar=llvm-ar-6.0
+alias llvm-c-test=llvm-c-test-6.0
+alias llvm-dlltool=llvm-dlltool-6.0
+alias llvm-link=llvm-link-6.0
+alias llvm-mt=llvm-mt-6.0
+alias llvm-profdata=llvm-profdata-6.0
+alias llvm-split=llvm-split-6.0
+alias llvm-as=llvm-as-6.0
+alias llvm-cvtres=llvm-cvtres-6.0
+alias llvm-dsymutil=llvm-dsymutil-6.0
+alias llvm-lto2=llvm-lto2-6.0
+alias llvm-nm=llvm-nm-6.0
+alias llvm-ranlib=llvm-ranlib-6.0
+alias llvm-stress=llvm-stress-6.0
+alias llvm-bcanalyzer=llvm-bcanalyzer-6.0
+alias llvm-cxxdump=llvm-cxxdump-6.0
+alias llvm-dwarfdump=llvm-dwarfdump-6.0
+alias llvm-lto=llvm-lto-6.0
+alias llvm-objdump=llvm-objdump-6.0
+alias llvm-readelf=llvm-readelf-6.0
+alias llvm-readelf=llvm-strings-6.0
+alias llvm-cat=llvm-cat-6.0
+alias llvm-cxxfilt=llvm-cxxfilt-6.0
+alias llvm-dwp=llvm-dwp-6.0
+alias llvm-mc=llvm-mc-6.0
+alias llvm-opt-report=llvm-opt-report-6.0
+alias llvm-readobj=llvm-readobj-6.0
+alias llvm-symbolizer=llvm-symbolizer-6.0
+alias llvm-config=llvm-config-6.0
+alias llvm-diff=llvm-diff-6.0
+alias llvm-extract=llvm-extract-6.0
+alias llvm-mcmarkup=llvm-mcmarkup-6.0
+alias llvm-pdbutil=llvm-pdbutil-6.0
+alias llvm-rtdyld=llvm-rtdyld-6.0
+alias llvm-tblgen=llvm-tblgen-6.0
+alias llvm-cov=llvm-cov-6.0
+alias llvm-dis=llvm-dis-6.0
+alias llvm-lib=llvm-lib-6.0
+alias llvm-modextract=llvm-modextract-6.0
+alias llvm-PerfectShuffle=llvm-PerfectShuffle-6.0
+alias llvm-size=llvm-size-6.0
+alias llvm-xray=llvm-xray-6.0
+# alias clang-format=clang-format-6.0
 
 # nim
 nim_dir=/opt/nim
@@ -261,6 +262,8 @@ asdf=$(
 # source /usr/share/doc/pkgfile/command-not-found.bash
 
 # Update path variable
-export PATH="${PATH}:/opt/vscode/bin:/opt/clojurescript/bin:${HOME}/.local/bin:${nim_dir}/sbin:${asdf}/bin:${asdf}/shims:${GOBIN}:$HOME/.cargo/bin"
+export PATH="${PATH}:/opt/rai/bin:/opt/nav/bin:/opt/vscode/bin:/opt/clojurescript/bin:${HOME}/.local/bin:${nim_dir}/sbin:${asdf}/bin:${asdf}/shims:${GOBIN}:$HOME/.cargo/bin:"
+
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
 [[ -e "${HOME}/.bash_local" ]] && source "${HOME}/.bash_local"
